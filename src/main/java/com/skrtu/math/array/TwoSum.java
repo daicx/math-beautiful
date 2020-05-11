@@ -18,7 +18,12 @@ public class TwoSum {
 
     /***
      * @Author dcx
-     * @Description //TODO 时间复杂度O(n),空间复杂度:O(n)
+     * @Description //TODO
+     * 时间复杂度O(n),
+     * 空间复杂度:O(n)
+     *执行用时 :2 ms, 在所有 Java 提交中击败了99.64%的用户
+     * 内存消耗 :39.8 MB, 在所有 Java 提交中击败了5.06%的用户
+     *
      * @Date 17:25 2020/5/8
      * @Param [nums, target]
      * @return int[]
