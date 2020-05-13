@@ -1,7 +1,5 @@
 package com.skrtu.math.string;
 
-import java.util.HashMap;
-
 /***
  * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
  **/
@@ -10,33 +8,33 @@ public class LengthOfLongestSubstring {
     /***
      * @Author dcx
      * @Description //TODO
+     * 滑动窗口模型
+     *
+     *时间复杂度：O*(*n)
+     * 空间复杂度：O(n)
+     * 执行用时 :11 ms, 在所有 Java 提交中击败了41.43%的用户
+     * 内存消耗 :40.5 MB, 在所有 Java 提交中击败了5.20%的用户
      * @Date 18:27 2020/5/11
      * @Param [s]
      * @return int
      **/
     public int lengthOfLongestSubstring(String s) {
-        //记录起始点下标开始
-        int left = 0;
-        //记录最大长度
-        int max = 0;
-        //key存值,value存最大长度
-        HashMap<Character, Integer> map = new HashMap<>();
+        //需要求得字符串,作为滑动的窗口队列,可以是最长的,也可以是最短的
+        String subStr = "";
+        //临时窗口
+        String tmpStr = "";
         for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            //当map中存在的时候,重置left为最大的一个
-            if (map.containsKey(c)) {
-                left = i + 1;
-            }
-            map.put(c, i);
-            //求最大的
-            max = Math.max(max, i-left+1);
+            String c = String.valueOf(s.charAt(i));
+            //临时窗口有就去掉元素之前的,再加入新元素,没有就直接加入新元素
+            tmpStr = (tmpStr.contains(c) ? tmpStr.substring(tmpStr.indexOf(c) + 1) : tmpStr) + c;
+            subStr = subStr.length() > tmpStr.length() ? subStr : tmpStr;
         }
-        return max;
+        return subStr.length();
     }
 
     public static void main(String[] args) {
         LengthOfLongestSubstring lengthOfLongestSubstring = new LengthOfLongestSubstring();
-        int i = lengthOfLongestSubstring.lengthOfLongestSubstring("pwwkew");
+        int i = lengthOfLongestSubstring.lengthOfLongestSubstring("abcabcbb");
         System.out.println(i);
     }
 }
