@@ -27,6 +27,7 @@ public class LengthOfLongestSubstring {
             String c = String.valueOf(s.charAt(i));
             //临时窗口有就去掉元素之前的,再加入新元素,没有就直接加入新元素
             tmpStr = (tmpStr.contains(c) ? tmpStr.substring(tmpStr.indexOf(c) + 1) : tmpStr) + c;
+            //记录出现的最长的一个临时窗口
             subStr = subStr.length() > tmpStr.length() ? subStr : tmpStr;
         }
         return subStr.length();
