@@ -1,20 +1,19 @@
 package com.skrtu.math.tree;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /***
  * @Author dcx
  * @Description //TODO
  * 遍历方式和根的取值顺序有关
  * 前序遍历: 遍历顺序为,根左右
- * 中序遍历: 遍历顺序为,左中根
+ * 中序遍历: 遍历顺序为,左根右
  * 后序遍历: 遍历顺序为,左右根
  *
  * @Date 17:08 2020/6/3
  **/
 public class PreListTree {
-    class TreeNode {
+    private static StringBuilder str = new StringBuilder();
+
+    static class TreeNode {
         private int val;
         private TreeNode left;
         private TreeNode right;
@@ -22,61 +21,55 @@ public class PreListTree {
         public TreeNode(int val) {
             this.val = val;
         }
+
     }
 
-    /***
-     * @Author dcx
-     * @Description //前序遍历
-     * @Date 17:08 2020/6/3
-     * @Param [treeNode, list]
-     * @return void
-     **/
-    private void preList(TreeNode treeNode, List<Integer> list) {
+    public static void preScan(TreeNode treeNode) {
         if (treeNode == null) {
             return;
         }
-        list.add(treeNode.val);
-        preList(treeNode.left, list);
-        preList(treeNode.right, list);
+        str.append(treeNode.val);
+        preScan(treeNode.left);
+        preScan(treeNode.right);
     }
 
-    /***
-     * @Author dcx
-     * @Description //TODO 中序遍历
-     * @Date 17:13 2020/6/3
-     * @Param [treeNode, list]
-     * @return void
-     **/
-    private void midList(TreeNode treeNode, List<Integer> list) {
+    public static void middleScan(TreeNode treeNode) {
         if (treeNode == null) {
             return;
         }
-        preList(treeNode.left, list);
-        list.add(treeNode.val);
-        preList(treeNode.right, list);
+        preScan(treeNode.left);
+        str.append(treeNode.val);
+        preScan(treeNode.right);
     }
 
-    /***
-     * @Author dcx
-     * @Description
-     * 后续遍历
-     * @Date 17:13 2020/6/3
-     * @Param [treeNode, list]
-     * @return void
-     **/
-    private void nextList(TreeNode treeNode, List<Integer> list) {
+    public static void proScan(TreeNode treeNode) {
         if (treeNode == null) {
             return;
         }
-        preList(treeNode.left, list);
-        preList(treeNode.right, list);
-        list.add(treeNode.val);
+        preScan(treeNode.left);
+        preScan(treeNode.right);
+        str.append(treeNode.val);
     }
 
 
-    public List<Integer> preorderTraversal(TreeNode root) {
-        ArrayList<Integer> objects = new ArrayList<>();
-        preList(root, objects);
-        return objects;
+    public static void main(String[] args) {
+        TreeNode treeNode = initData();
+//        preScan(treeNode);
+        proScan(treeNode);
+        System.out.println(str);
+    }
+
+
+    public static TreeNode initData() {
+        TreeNode treeNode = new TreeNode(0);
+        TreeNode treeNode1 = new TreeNode(1);
+        TreeNode treeNode2 = new TreeNode(2);
+        TreeNode treeNode3 = new TreeNode(3);
+        TreeNode treeNode4 = new TreeNode(4);
+        treeNode.left = treeNode1;
+        treeNode.right = treeNode2;
+        treeNode1.left = treeNode3;
+        treeNode2.right = treeNode4;
+        return treeNode;
     }
 }
