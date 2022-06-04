@@ -12,6 +12,7 @@ import java.util.HashMap;
  * 执行用时 :1 ms, 在所有 Java 提交中击败了99.97%的用户
  *
  * 内存消耗 :42.9 MB, 在所有 Java 提交中击败了57.14%的用户
+ * https://leetcode.cn/problems/intersection-of-two-linked-lists/comments/
  * @Date 14:20 2020/6/3
  * @Param
  * @return
