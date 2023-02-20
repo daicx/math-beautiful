@@ -9,7 +9,9 @@ package com.skuu.math.node;
 public class ReverseList {
 
     public ListNode reverseList(ListNode head) {
+        //一个新链表
         ListNode pre = null;
+        //一个指针
         ListNode cur;
         while (head != null) {
             ListNode next = head.next;
