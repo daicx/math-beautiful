@@ -8,24 +8,18 @@ import java.util.ArrayList;
 @SpringBootTest
 class SkuuApplicationTests {
 
+    /**
+     * 链表反转
+     *
+     * @param
+     * @return void
+     * @author dcx
+     * @date 2023/2/20 16:53
+     **/
     @Test
-    void contextLoads() {
-        ArrayList<Integer> arr = new ArrayList<>();
-
+    void transLink() {
 
     }
-    public int singleNumber(int[] nums) {
-        int num = 0;
-        for(int i = 0; i < nums.length; i++){
-            num = num ^ nums[i];
-        }
-        return num;
-    }
 
-    public void swap(int a, int b) {
-        a = a + b;
-        b = a - b;
-        a = a - b;
-    }
 
 }
