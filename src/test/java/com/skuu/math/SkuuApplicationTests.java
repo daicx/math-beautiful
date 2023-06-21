@@ -1,5 +1,6 @@
 package com.skuu.math;
 
+import com.skuu.math.node.ListNode;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -17,7 +18,7 @@ class SkuuApplicationTests {
      * @date 2023/2/20 16:53
      **/
     @Test
-    void transLink() {
+    void transLink(ListNode head) {
 
     }
 
