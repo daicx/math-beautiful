@@ -1,7 +1,6 @@
 package com.skuu.math.tree.page;
 
 import com.google.common.collect.Lists;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
