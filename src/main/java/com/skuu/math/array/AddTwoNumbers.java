@@ -10,11 +10,16 @@ package com.skuu.math.array;
  * 输入：(2 -> 4 -> 3) + (5 -> 6 -> 4)
  * 输出：7 -> 0 -> 8
  * 原因：342 + 465 = 807
+ *
+ * <a href="https://leetcode.cn/problems/add-two-numbers/">...</a>
  **/
 
 class ListNode {
     int val;
     ListNode next;
+
+    ListNode() {
+    }
 
     public ListNode(int val) {
         this.val = val;
@@ -23,46 +28,66 @@ class ListNode {
 
 public class AddTwoNumbers {
     /***
-     * @Author dcx
-     * @Description //TODO
+     * 关键点：
+     * 1。链表的循环。
+     * 2。链表的新增。
      * 损耗:
      * 时间复杂度:O(max(m,n))
      * 空间复杂度:O(max(m,n))
-     * 执行用时 :2 ms, 在所有 Java 提交中击败了99.93%的用户
-     * 内存消耗 :39.5 MB, 在所有 Java 提交中击败了94.74%的用户
      *
      * @Date 17:25 2020/5/8
      * @Param [l1, l2]
      * @return com.skrtu.math.common.ListNode
      **/
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        //进位时携带的数
-        int carry = 0;
-        //结果node组成点
-        ListNode result = new ListNode(0);
-        //指向result的用来添加数据的节点
-        ListNode tmp = result;
-        while (l1 != null || l2 != null) {
-            //取值
-            int a = l1 == null ? 0 : l1.val;
-            int b = l2 == null ? 0 : l2.val;
-            //加和
-            int sum = a + b + carry;
-            //大于10就要进位
-            carry = sum / 10;
-            //添加节点,如果进位了,添加的是余数
-            tmp.next = new ListNode(sum % 10);
-            //指针后移
+        int carryNum = 0;
+        ListNode res = new ListNode();
+        ListNode tmp = res;
+        while (l1 != null && l2 != null) {
+            int val1 = l1.val;
+            int val2 = l2.val;
+            int sum = val1 + val2 + carryNum;
+            if (sum > 9) {
+                carryNum = 1;
+                tmp.next = new ListNode(sum - 10);
+            } else {
+                carryNum = 0;
+                tmp.next = new ListNode(sum);
+            }
             tmp = tmp.next;
-            //移动
-            if (l1 != null) l1 = l1.next;
-            if (l2 != null) l2 = l2.next;
+            l1 = l1.next;
+            l2 = l2.next;
         }
-        //判断是否发生最后一位进位
-        if (carry > 0) {
-            tmp.next = new ListNode(carry);
+        while (l1 != null) {
+            int val = l1.val;
+            int sum = val + carryNum;
+            if (sum > 9) {
+                carryNum = 1;
+                tmp.next = new ListNode(sum - 10);
+            } else {
+                carryNum = 0;
+                tmp.next = new ListNode(sum);
+            }
+            tmp = tmp.next;
+            l1 = l1.next;
         }
-        return result.next;
+        while (l2 != null) {
+            int val = l2.val;
+            int sum = val + carryNum;
+            if (sum > 9) {
+                carryNum = 1;
+                tmp.next = new ListNode(sum - 10);
+            } else {
+                carryNum = 0;
+                tmp.next = new ListNode(sum);
+            }
+            tmp = tmp.next;
+            l2 = l2.next;
+        }
+        if (carryNum > 0) {
+            tmp.next = new ListNode(carryNum);
+        }
+        return res.next;
     }
 
     public static void main(String[] args) {

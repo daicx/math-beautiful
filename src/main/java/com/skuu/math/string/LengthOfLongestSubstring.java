@@ -2,36 +2,38 @@ package com.skuu.math.string;
 
 /***
  * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
- * https://leetcode.cn/problems/longest-substring-without-repeating-characters/
+ * <a href="https://leetcode.cn/problems/longest-substring-without-repeating-characters/">...</a>
  **/
 public class LengthOfLongestSubstring {
 
     /***
-     * @Author dcx
-     * @Description //TODO
      * 滑动窗口模型
+     * 关键点：
+     * 1。需要一个结果字符串保存最长的字符串。
+     * 2。一个临时字符串，做为滑动窗口。
      *
-     *时间复杂度：O*(*n)
+     * 时间复杂度：O*(*n)
      * 空间复杂度：O(n)
-     * 执行用时 :11 ms, 在所有 Java 提交中击败了41.43%的用户
-     * 内存消耗 :40.5 MB, 在所有 Java 提交中击败了5.20%的用户
      * @Date 18:27 2020/5/11
      * @Param [s]
      * @return int
      **/
     public int lengthOfLongestSubstring(String s) {
-        //需要求得字符串,作为滑动的窗口队列,可以是最长的,也可以是最短的
-        String subStr = "";
-        //临时窗口
-        String tmpStr = "";
+        String res = "";
+        String temp = "";
         for (int i = 0; i < s.length(); i++) {
-            String c = String.valueOf(s.charAt(i));
-            //临时窗口有就去掉元素之前的,再加入新元素,没有就直接加入新元素
-            tmpStr = (tmpStr.contains(c) ? tmpStr.substring(tmpStr.indexOf(c) + 1) : tmpStr) + c;
-            //记录出现的最长的一个临时窗口
-            subStr = subStr.length() > tmpStr.length() ? subStr : tmpStr;
+            String c = s.charAt(i) + "";
+            if (temp.contains(c)) {
+                int index = temp.indexOf(c);
+                temp = temp.substring(index + 1) + c;
+            } else {
+                temp += c;
+            }
+            if (temp.length() > res.length()) {
+                res = temp;
+            }
         }
-        return subStr.length();
+        return res.length();
     }
 
     public static void main(String[] args) {

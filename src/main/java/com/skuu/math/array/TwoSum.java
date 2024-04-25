@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 /***
- * 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
+ * 1.给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
  *
  * 你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。
  * 示例:
@@ -13,16 +13,16 @@ import java.util.HashMap;
  *
  * 因为 nums[0] + nums[1] = 2 + 7 = 9
  * 所以返回 [0, 1]
+ * <a href="https://leetcode.cn/problems/two-sum/description/">...</a>
  **/
 public class TwoSum {
 
     /***
-     * @Author dcx
-     * @Description //TODO
+     * 关键点：
+     * 1。创建一个map容器，key是值，value是下标。
+     * 2。循环一次。
      * 时间复杂度O(n),
      * 空间复杂度:O(n)
-     *执行用时 :2 ms, 在所有 Java 提交中击败了99.64%的用户
-     * 内存消耗 :39.8 MB, 在所有 Java 提交中击败了5.06%的用户
      *
      * @Date 17:25 2020/5/8
      * @Param [nums, target]

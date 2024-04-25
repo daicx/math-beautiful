@@ -1,13 +1,5 @@
 package com.skuu.math;
 
-import com.skuu.math.tree.TreeNode;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-
 /**
  * 测试类
  *
@@ -15,39 +7,27 @@ import java.util.concurrent.BlockingQueue;
  * @since 2023-02-20 16:58
  **/
 public class MathTest {
-    static class Node {
-        public int num;
-        public Node next;
-    }
 
-    public static void transferNode(TreeNode node) {
-
-        ArrayList<List<Integer>> objects = new ArrayList<>();
-        LinkedList<TreeNode> linkedList = new LinkedList<>();
-        if (node == null){
-            return;
-        }
-        linkedList.add(node);
-        while (!linkedList.isEmpty()){
-            int size = linkedList.size();
-            ArrayList<Integer> listTmp = new ArrayList<>();
-            for (int i = 0; i < size; i++) {
-                TreeNode poll = linkedList.poll();
-                listTmp.add(poll.val);
-                TreeNode right = poll.right;
-                if (right!= null){
-                    linkedList.add(right);
-                }
-                TreeNode left = poll.left;
-                if (left!= null){
-                    linkedList.add(left);
-                }
+    public int lengthOfLongestSubstring(String s) {
+        String res = "";
+        String temp = "";
+        for (int i = 0; i < s.length(); i++) {
+            String c = s.charAt(i) + "";
+            if (temp.contains(c)) {
+                int index = temp.indexOf(c);
+                temp = temp.substring(index+1) + c;
+            } else {
+                temp += c;
             }
-            objects.add(listTmp);
+            if (temp.length() > res.length()) {
+                res = temp;
+            }
         }
+        return res.length();
     }
 
     public static void main(String[] args) {
-
+        MathTest mathTest = new MathTest();
+        mathTest.lengthOfLongestSubstring("pwwkew");
     }
 }
