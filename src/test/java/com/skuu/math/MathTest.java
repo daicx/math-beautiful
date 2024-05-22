@@ -1,5 +1,9 @@
 package com.skuu.math;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * 测试类
  *
@@ -8,26 +12,8 @@ package com.skuu.math;
  **/
 public class MathTest {
 
-    public int lengthOfLongestSubstring(String s) {
-        String res = "";
-        String temp = "";
-        for (int i = 0; i < s.length(); i++) {
-            String c = s.charAt(i) + "";
-            if (temp.contains(c)) {
-                int index = temp.indexOf(c);
-                temp = temp.substring(index+1) + c;
-            } else {
-                temp += c;
-            }
-            if (temp.length() > res.length()) {
-                res = temp;
-            }
-        }
-        return res.length();
-    }
 
     public static void main(String[] args) {
         MathTest mathTest = new MathTest();
-        mathTest.lengthOfLongestSubstring("pwwkew");
     }
 }

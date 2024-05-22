@@ -2,8 +2,9 @@ package com.skuu.math.string;
 
 /***
  * @Author dcx
- * @Description //TODO 最长回文子串
+ * @Description
  * 给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。
+ * <a href="https://leetcode.cn/problems/longest-palindromic-substring/">...</a>
  * @Date 10:42 2020/5/18
  **/
 public class LongestPalindrome {
@@ -53,10 +54,57 @@ public class LongestPalindrome {
         return result;
     }
 
+    /**
+     * 关键点：
+     * 1.填充二维矩阵，只填充一半
+     * @param s
+     * @return java.lang.String
+     * @author dcx
+     * @date 2024/5/22 11:26
+     **/
+    public String longestPalindrome1(String s) {
+        int length = s.length();
+        if (length < 2) {
+            return s;
+        }
+        boolean[][] dp = new boolean[length][length];
+        for (int i = 0; i < length; i++) {
+            dp[i][i] = true;
+        }
+        int begin = 0, maxLength = 0;
+        for (int j = 0; j < length; j++) {
+            for (int i = 0; i < length; i++) {
+                if (i > j) {
+                    break;
+                }
+                char iValue = s.charAt(i);
+                char jValue = s.charAt(j);
+                if (iValue != jValue) {
+                    dp[i][j] = false;
+                } else {
+                    if (j - i < 3) {
+                        dp[i][j] = true;
+                    } else {
+                        dp[i][j] = dp[i + 1][j - 1];
+                    }
+
+                }
+                if (dp[i][j]) {
+                    int tempLength = j - i+1;
+                    if (tempLength > maxLength) {
+                        begin = i;
+                        maxLength = tempLength;
+                    }
+                }
+            }
+        }
+        return s.substring(begin, begin + maxLength);
+    }
+
 
     public static void main(String[] args) {
         LongestPalindrome longestPalindrome = new LongestPalindrome();
-        String s = longestPalindrome.longestPalindrome("bccaccb");
+        String s = longestPalindrome.longestPalindrome1("babad");
         System.out.println(s);
     }
 }
