@@ -2,40 +2,39 @@ package com.skuu.math.integer;
 
 /***
  * @Author dcx
- * @Description //TODO 整数反转
+ * @Description
  * 给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转。
+ * <a href="https://leetcode.cn/problems/reverse-integer/submissions/534091633/">...</a>
  * @Date 10:34 2020/5/19
  **/
 public class Reverse {
-    /***
-     * @Author dcx
-     * @Description //TODO
+
+
+    /**
+     * 关键点：
+     * 1.用整除（/）循环
+     * 2.用取余（%）叠加
+     * 3.int 最大值和最小值判定。
      *
-     * 时间复杂度：O(log(x)),x 中大约有 lg (x) 位数字
-     * 空间复杂度：O(1)
-     * 执行用时 :1 ms, 在所有 Java 提交中击败了100.00%的用户
-     * 内存消耗 :37.1 MB, 在所有 Java 提交中击败了5.33%的用户
-     *
-     * @Date 10:35 2020/5/19
-     * @Param [x]
+     * @param x
      * @return int
+     * @author dcx
+     * @date 2024/5/23 10:00
      **/
     public int reverse(int x) {
-        int rev = 0;
+        int result = 0;
         while (x != 0) {
-            //提前预判性会不会溢出
-            if (rev * 10 / 10 != rev) return 0;
-            //依次加进结果
-            rev = rev * 10 + x % 10;
-            //依次取出
-            x /= 10;
+            if (result > 214748364 || result < -214748364) {
+                return 0;
+            }
+            result = result * 10 + x % 10;
+            x = x / 10;
         }
-        return rev;
+        return result;
     }
 
     public static void main(String[] args) {
-        Reverse reverse = new Reverse();
-        int reverse1 = reverse.reverse(1534236469);
-        System.out.println(reverse1);
+        System.out.println(123 / 10);
+        System.out.println(123 % 10);
     }
 }
