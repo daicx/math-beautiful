@@ -2,6 +2,7 @@ package com.skuu.math.array;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 /***
  * 1.给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
@@ -19,7 +20,7 @@ public class TwoSum {
 
     /***
      * 关键点：
-     * 1。创建一个map容器，key是值，value是下标。
+     * 1。b=c-a,遍历数组的时候，缓存下a的值和下标。这样在遍历到b的时候，可以快速定位带a。
      * 2。循环一次。
      * 时间复杂度O(n),
      * 空间复杂度:O(n)
@@ -29,18 +30,14 @@ public class TwoSum {
      * @return int[]
      **/
     public int[] twoSum(int[] nums, int target) {
-        //map,key是值,value是下标
-        HashMap<Integer, Integer> hashMap = new HashMap<>();
-        //循环一次
+        Map<Integer,Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
-            //求差
-            int tmp = target - nums[i];
-            //如果map里面有了差,输出value下标
-            if (hashMap.containsKey(tmp)) {
-                return new int[]{i, hashMap.get(tmp)};
-                //否则,将此次循环到的下标和值放进map.
-            } else {
-                hashMap.put(nums[i], i);
+            int a =  nums[i];
+            int b = target-a;
+            if (map.containsKey(b)){
+                return new int[]{i,map.get(b)};
+            }else {
+                map.put(a,i);
             }
         }
         return null;
