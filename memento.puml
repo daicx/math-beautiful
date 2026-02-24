@@ -1,0 +1,49 @@
+@startuml
+package 备忘录模式{
+class TextMemento {
+- String content
+- int cursorPosition
+- String timestamp
+~ String getContent()
+~ int getCursorPosition()
++ String getTimestamp()
++ String getInfo()
+}
+
+
+class History {
+- Stack<TextMemento> undoStack
+- Stack<TextMemento> redoStack
+- int maxHistorySize
++ void saveState(TextMemento)
++ TextMemento undo(TextMemento)
++ TextMemento redo(TextMemento)
++ boolean canUndo()
++ boolean canRedo()
++ void clear()
++ void showHistory()
++ int getHistorySize()
+}
+
+
+class TextEditor {
+- String content
+- int cursorPosition
++ void type(String)
++ void delete(int)
++ void moveCursor(int)
++ TextMemento createMemento()
++ void restoreFromMemento(TextMemento)
++ void showStatus()
++ String getContent()
++ int getCursorPosition()
+}
+
+
+class Test {
++ {static} void main(String[])
+}
+}
+
+
+@enduml

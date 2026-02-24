@@ -4,7 +4,7 @@ package com.skuu.math.integer;
  * @Author dcx
  * @Description
  * 给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转。
- * <a href="https://leetcode.cn/problems/reverse-integer/submissions/534091633/">...</a>
+ * <OrderCglibProxy href="https://leetcode.cn/problems/reverse-integer/submissions/534091633/">...</OrderCglibProxy>
  * @Date 10:34 2020/5/19
  **/
 public class Reverse {

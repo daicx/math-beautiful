@@ -1,0 +1,56 @@
+@startuml
+package 享元模式{
+
+class ConcreteCharacter {
+- char character
++ void display(int,String,String)
++ char getCharacter()
+}
+
+
+class Test {
++ {static} void main(String[])
+}
+
+class Editor {
+- List<CharacterContext> characters
+- CharacterFactory factory
++ void insertCharacter(char,int,String,String)
++ void display()
++ int getCharacterCount()
++ void clear()
+}
+
+
+class Editor$CharacterContext {
+- CharacterFlyweight flyweight
+- int fontSize
+- String color
+- String position
++ void display()
+}
+
+
+interface CharacterFlyweight {
+~ void display(int,String,String)
+}
+
+class CharacterFactory {
+- Map<Character,CharacterFlyweight> flyweightPool
+- {static} CharacterFactory instance
++ {static} CharacterFactory getInstance()
++ CharacterFlyweight getCharacter(char)
++ int getPoolSize()
++ void clearPool()
++ void showPoolStatus()
+}
+
+
+}
+
+
+
+
+CharacterFlyweight <|.. ConcreteCharacter
+Editor +.. Editor$CharacterContext
+@enduml

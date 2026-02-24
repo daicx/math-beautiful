@@ -1,0 +1,271 @@
+@startuml 行为型设计模式（第1部分）
+
+title 行为型设计模式 UML类图（第1部分）
+
+' ==================== 13. 责任链模式 ====================
+package "13. 责任链模式 (Chain of Responsibility)" {
+    abstract class ApprovalHandler {
+        # nextHandler: ApprovalHandler
+        + setNext(handler: ApprovalHandler): void
+        + handle(request: LeaveRequest): ApprovalResult
+        # {abstract} doHandle(request: LeaveRequest): ApprovalResult
+        # {abstract} canHandle(request: LeaveRequest): boolean
+    }
+    
+    class TeamLeaderHandler extends ApprovalHandler {
+        # doHandle(request: LeaveRequest): ApprovalResult
+        # canHandle(request: LeaveRequest): boolean
+    }
+    
+    class DepartmentManagerHandler extends ApprovalHandler {
+        # doHandle(request: LeaveRequest): ApprovalResult
+        # canHandle(request: LeaveRequest): boolean
+    }
+    
+    class GeneralManagerHandler extends ApprovalHandler {
+        # doHandle(request: LeaveRequest): ApprovalResult
+        # canHandle(request: LeaveRequest): boolean
+    }
+    
+    ApprovalHandler o-- ApprovalHandler : next
+    
+    note right of ApprovalHandler
+        为请求创建接收者对象的链
+        沿着链传递请求直到有对象处理
+        
+        优点：
+        - 降低耦合度
+        - 增强灵活性
+        - 动态组合责任链
+        
+        应用：
+        - Servlet过滤器链
+        - Spring Security
+    end note
+}
+
+' ==================== 14. 命令模式 ====================
+package "14. 命令模式 (Command)" {
+    interface Command {
+        + execute(): void
+        + undo(): void
+        + getDescription(): String
+    }
+    
+    class Light {
+        + on(): void
+        + off(): void
+        + dim(level: int): void
+    }
+    
+    class LightOnCommand implements Command {
+        - light: Light
+        + execute(): void
+        + undo(): void
+    }
+    
+    class RemoteControl {
+        - onCommands: Command[]
+        - offCommands: Command[]
+        - undoStack: Stack<Command>
+        + setCommand(slot: int, on: Command, off: Command): void
+        + onButtonWasPressed(slot: int): void
+        + undoButtonWasPressed(): void
+    }
+    
+    LightOnCommand --> Light
+    RemoteControl o-- Command
+    
+    note right of Command
+        将请求封装为对象
+        
+        优点：
+        - 解耦调用者和接收者
+        - 支持撤销/重做
+        - 支持宏命令
+        - 可以记录命令历史
+        
+        应用：
+        - GUI按钮
+        - 线程池（Runnable）
+    end note
+}
+
+' ==================== 15. 解释器模式 ====================
+package "15. 解释器模式 (Interpreter)" {
+    interface Expression {
+        + interpret(context: Context): int
+    }
+    
+    class NumberExpression implements Expression {
+        - number: int
+        + interpret(context: Context): int
+    }
+    
+    class VariableExpression implements Expression {
+        - name: String
+        + interpret(context: Context): int
+    }
+    
+    class AddExpression implements Expression {
+        - left: Expression
+        - right: Expression
+        + interpret(context: Context): int
+    }
+    
+    class Context {
+        - variables: Map<String, Integer>
+        + setVariable(name: String, value: int): void
+        + getVariable(name: String): int
+    }
+    
+    AddExpression o-- Expression
+    
+    note right of Expression
+        定义语言的文法并建立解释器
+        
+        核心：
+        - 终结符表达式
+        - 非终结符表达式
+        - 抽象语法树
+        
+        应用：
+        - 正则表达式
+        - SQL解析
+        - 规则引擎
+    end note
+}
+
+' ==================== 16. 迭代器模式 ====================
+package "16. 迭代器模式 (Iterator)" {
+    interface Iterator<T> {
+        + hasNext(): boolean
+        + next(): T
+        + remove(): void
+    }
+    
+    interface Aggregate<T> {
+        + createIterator(): Iterator<T>
+        + add(item: T): void
+        + size(): int
+    }
+    
+    class BreakfastMenu implements Aggregate {
+        - menuItems: List<MenuItem>
+        + createIterator(): Iterator<MenuItem>
+    }
+    
+    class BreakfastMenuIterator implements Iterator {
+        - position: int
+        + hasNext(): boolean
+        + next(): MenuItem
+    }
+    
+    BreakfastMenu +-- BreakfastMenuIterator
+    
+    note right of Iterator
+        提供统一的方式顺序访问聚合对象
+        不暴露内部表示
+        
+        优点：
+        - 统一遍历接口
+        - 隐藏内部结构
+        - 支持多种遍历
+        
+        应用：
+        - Java集合框架
+        - for-each循环
+    end note
+}
+
+' ==================== 17. 中介者模式 ====================
+package "17. 中介者模式 (Mediator)" {
+    interface ChatRoomMediator {
+        + registerUser(user: User): void
+        + sendMessage(message: String, sender: User): void
+    }
+    
+    class ChatRoom implements ChatRoomMediator {
+        - users: Map<String, User>
+        + registerUser(user: User): void
+        + sendMessage(message: String, sender: User): void
+    }
+    
+    abstract class User {
+        # name: String
+        # mediator: ChatRoomMediator
+        + setMediator(mediator: ChatRoomMediator): void
+        + {abstract} send(message: String): void
+        + {abstract} receive(message: String, sender: User): void
+    }
+    
+    class RegularUser extends User {
+        + send(message: String): void
+        + receive(message: String, sender: User): void
+    }
+    
+    ChatRoom o-- User
+    User --> ChatRoomMediator
+    
+    note right of ChatRoomMediator
+        用中介对象封装对象间的交互
+        
+        优点：
+        - 降低对象间耦合
+        - 集中控制交互
+        - 简化对象协议
+        
+        应用：
+        - 聊天室
+        - MVC中的Controller
+    end note
+}
+
+' ==================== 18. 备忘录模式 ====================
+package "18. 备忘录模式 (Memento)" {
+    class TextMemento {
+        - content: String
+        - cursorPosition: int
+        - timestamp: String
+        + TextMemento(content: String, cursorPosition: int)
+        ~ getContent(): String
+        ~ getCursorPosition(): int
+        + getInfo(): String
+    }
+    
+    class TextEditor {
+        - content: String
+        - cursorPosition: int
+        + type(text: String): void
+        + createMemento(): TextMemento
+        + restoreFromMemento(memento: TextMemento): void
+    }
+    
+    class History {
+        - undoStack: Stack<TextMemento>
+        - redoStack: Stack<TextMemento>
+        + saveState(memento: TextMemento): void
+        + undo(currentState: TextMemento): TextMemento
+        + redo(currentState: TextMemento): TextMemento
+    }
+    
+    TextEditor ..> TextMemento : creates
+    History o-- TextMemento
+    
+    note right of TextMemento
+        保存对象的内部状态
+        在不破坏封装的前提下恢复状态
+        
+        优点：
+        - 实现撤销/重做
+        - 保持封装性
+        
+        应用：
+        - 文本编辑器
+        - 事务回滚
+        - 游戏存档
+    end note
+}
+
+@enduml
+

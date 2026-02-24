@@ -1,0 +1,112 @@
+@startuml
+package 访问者模式{
+interface Visitor {
+~ void visit(Engineer)
+~ void visit(Manager)
+~ void visit(CEO)
+}
+
+interface Employee {
+~ void accept(Visitor)
+~ String getName()
+~ String getPosition()
+}
+
+class AnnualReportGenerator {
+- StringBuilder report
++ void visit(Engineer)
++ void visit(Manager)
++ void visit(CEO)
++ String getReport()
+}
+
+
+class Manager {
+- String name
+- int workingYears
+- int teamSize
+- int projectCount
++ void accept(Visitor)
++ String getName()
++ String getPosition()
++ int getWorkingYears()
++ int getTeamSize()
++ int getProjectCount()
+}
+
+
+class CEO {
+- String name
+- int workingYears
+- int departmentCount
+- double companyRevenue
++ void accept(Visitor)
++ String getName()
++ String getPosition()
++ int getWorkingYears()
++ int getDepartmentCount()
++ double getCompanyRevenue()
+}
+
+
+class SalaryCalculator {
+- double totalSalary
++ void visit(Engineer)
++ void visit(Manager)
++ void visit(CEO)
++ double getTotalSalary()
++ void reset()
+}
+
+
+class Test {
++ {static} void main(String[])
+}
+
+class Company {
+- String name
+- List<Employee> employees
++ void addEmployee(Employee)
++ void removeEmployee(Employee)
++ void accept(Visitor)
++ int getEmployeeCount()
++ String getName()
++ void showCompanyInfo()
+}
+
+
+class Engineer {
+- String name
+- int workingYears
+- int codeLines
++ void accept(Visitor)
++ String getName()
++ String getPosition()
++ int getWorkingYears()
++ int getCodeLines()
+}
+
+
+class PerformanceEvaluator {
+- int totalScore
+- int count
++ void visit(Engineer)
++ void visit(Manager)
++ void visit(CEO)
+- String getGrade(int)
++ double getAverageScore()
++ void reset()
+}
+
+
+
+}
+
+
+Visitor <|.. AnnualReportGenerator
+Employee <|.. Manager
+Employee <|.. CEO
+Visitor <|.. SalaryCalculator
+Employee <|.. Engineer
+Visitor <|.. PerformanceEvaluator
+@enduml

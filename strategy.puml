@@ -1,0 +1,55 @@
+@startuml
+package 策略模式{
+class ShoppingCart {
+- PaymentStrategy paymentStrategy
+- double totalAmount
++ void setPaymentStrategy(PaymentStrategy)
++ void addItem(String,double)
++ void checkout()
++ double getTotalAmount()
+}
+
+
+class PayPalPayment {
+- String email
++ void pay(double)
+}
+
+
+class CreditCardPayment {
+- String cardNumber
+- String name
++ void pay(double)
+- String maskCardNumber(String)
+}
+
+
+class AliPayPayment {
+- String account
++ void pay(double)
+}
+
+
+class StrategyPatternTest {
++ {static} void main(String[])
+}
+
+class WeChatPayment {
+- String openId
++ void pay(double)
+}
+
+
+interface PaymentStrategy {
+~ void pay(double)
+}
+
+}
+
+
+
+PaymentStrategy <|.. PayPalPayment
+PaymentStrategy <|.. CreditCardPayment
+PaymentStrategy <|.. AliPayPayment
+PaymentStrategy <|.. WeChatPayment
+@enduml

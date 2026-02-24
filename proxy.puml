@@ -1,0 +1,61 @@
+@startuml
+package 代理模式 {
+interface OrderService {
+~ void create(int)
+~ void pay(int)
+}
+
+class OrderServiceProxy {
+- OrderService orderService
++ void create(int)
++ void pay(int)
+- void before()
+- void after()
+}
+
+
+class Order {
++ void create(int)
++ void pay(int)
+}
+
+class Test {
++ {static} void staticProxy()
++ {static} void jdkProxy()
++ {static} void cglibProxy()
++ {static} void main(String[])
+}
+
+class OrderServiceImpl {
++ void create(int)
++ void pay(int)
+}
+
+class LogHandler {
+~ Object target
++ Object invoke(Object,Method,Object[])
+- void before()
+- void after()
+}
+
+
+class LogInterceptor {
++ Object intercept(Object,Method,Object[],MethodProxy)
+- void before()
+- void after()
+}
+
+class ProxyUtils {
++ {static} void generateClassFile(Class,String)
+}
+
+
+
+
+OrderService <|.. OrderServiceProxy
+OrderService <|.. OrderServiceImpl
+InvocationHandler <|.. LogHandler
+MethodInterceptor <|.. LogInterceptor
+}
+
+@enduml

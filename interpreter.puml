@@ -1,0 +1,86 @@
+@startuml
+package 解释器模式{
+class AddExpression {
+- Expression left
+- Expression right
++ int interpret(Context)
++ String toString()
+}
+
+
+class NumberExpression {
+- int number
++ int interpret(Context)
++ String toString()
+}
+
+
+class ExpressionParser {
++ {static} Expression parse(String)
+- {static} Expression parseToken(String)
+- {static} Expression createBinaryExpression(Expression,String,Expression)
+- {static} Expression parseComplexExpression(String[])
+- {static} boolean isOperator(String)
+- {static} int getPriority(String)
+}
+
+class Test {
++ {static} void main(String[])
+}
+
+interface Expression {
+~ int interpret(Context)
+~ String toString()
+}
+
+class DivideExpression {
+- Expression left
+- Expression right
++ int interpret(Context)
++ String toString()
+}
+
+
+class VariableExpression {
+- String name
++ int interpret(Context)
++ String toString()
+}
+
+
+class Context {
+- Map<String,Integer> variables
++ void setVariable(String,int)
++ int getVariable(String)
++ boolean hasVariable(String)
++ void showVariables()
+}
+
+
+class MultiplyExpression {
+- Expression left
+- Expression right
++ int interpret(Context)
++ String toString()
+}
+
+
+class SubtractExpression {
+- Expression left
+- Expression right
++ int interpret(Context)
++ String toString()
+}
+
+}
+
+
+
+
+Expression <|.. AddExpression
+Expression <|.. NumberExpression
+Expression <|.. DivideExpression
+Expression <|.. VariableExpression
+Expression <|.. MultiplyExpression
+Expression <|.. SubtractExpression
+@enduml

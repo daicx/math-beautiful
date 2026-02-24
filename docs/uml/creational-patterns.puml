@@ -1,0 +1,152 @@
+@startuml 创建型设计模式
+
+title 创建型设计模式 UML类图
+
+' ==================== 1. 单例模式 ====================
+package "1. 单例模式 (Singleton)" {
+    class Single {
+        - {static} single: Single
+        - Single()
+        + {static} getInstance(): Single
+    }
+    note right of Single
+        确保一个类只有一个实例
+        并提供全局访问点
+        
+        实现方式：
+        - 懒汉式
+        - 饿汉式
+        - 双重检查锁定
+        - 静态内部类
+        - 枚举
+    end note
+}
+
+' ==================== 2. 工厂方法模式 ====================
+package "2. 工厂方法模式 (Factory Method)" {
+    interface Shape {
+        + draw(): void
+    }
+    
+    class Circle implements Shape {
+        + draw(): void
+    }
+    
+    class Rectangle implements Shape {
+        + draw(): void
+    }
+    
+    class SimpleFactory {
+        + {static} createShape(type: String): Shape
+    }
+    
+    SimpleFactory ..> Shape : creates
+    SimpleFactory ..> Circle : creates
+    SimpleFactory ..> Rectangle : creates
+    
+    note right of SimpleFactory
+        定义创建对象的接口
+        让子类决定实例化哪个类
+        
+        优点：
+        - 解耦对象的创建和使用
+        - 符合开闭原则
+    end note
+}
+
+' ==================== 3. 抽象工厂模式 ====================
+package "3. 抽象工厂模式 (Abstract Factory)" {
+    interface Product {
+    }
+    
+    class Car implements Product {
+    }
+    
+    class Bicycle implements Product {
+    }
+    
+    interface ProductAbstractFactory {
+        + createProduct(): Product
+    }
+    
+    class CarFactory implements ProductAbstractFactory {
+        + createProduct(): Product
+    }
+    
+    class BicycleFactory implements ProductAbstractFactory {
+        + createProduct(): Product
+    }
+    
+    CarFactory ..> Car : creates
+    BicycleFactory ..> Bicycle : creates
+    
+    note right of ProductAbstractFactory
+        提供创建一系列相关或
+        相互依赖对象的接口
+        
+        优点：
+        - 产品族的一致性
+        - 易于切换产品系列
+    end note
+}
+
+' ==================== 4. 建造者模式 ====================
+package "4. 建造者模式 (Builder)" {
+    class User {
+        - name: String
+        - age: int
+        - email: String
+        - phone: String
+        + {static} builder(): UserBuilder
+    }
+    
+    class UserBuilder {
+        - name: String
+        - age: int
+        - email: String
+        - phone: String
+        + name(name: String): UserBuilder
+        + age(age: int): UserBuilder
+        + email(email: String): UserBuilder
+        + phone(phone: String): UserBuilder
+        + build(): User
+    }
+    
+    UserBuilder ..> User : builds
+    
+    note right of UserBuilder
+        将复杂对象的构建与表示分离
+        
+        优点：
+        - 链式调用
+        - 可选参数
+        - 创建不可变对象
+    end note
+}
+
+' ==================== 5. 原型模式 ====================
+package "5. 原型模式 (Prototype)" {
+    interface Cloneable {
+    }
+    
+    class UserPrototype implements Cloneable {
+        - id: Integer
+        - name: String
+        - desc: String
+        + clone(): Object
+    }
+    
+    note right of UserPrototype
+        通过拷贝原型创建新对象
+        
+        优点：
+        - 避免重复初始化
+        - 动态获取对象状态
+        
+        注意：
+        - 浅拷贝 vs 深拷贝
+    end note
+}
+
+@enduml
+

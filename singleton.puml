@@ -1,0 +1,18 @@
+@startuml
+package 单例模式{
+class Client {
+- String name
+}
+
+class Test {
++ {static} void main(String[])
+}
+
+enum Single {
++  INSTANCE
+- Client client
++ Client getClient()
+}
+}
+
+@enduml

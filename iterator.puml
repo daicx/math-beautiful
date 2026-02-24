@@ -1,0 +1,105 @@
+@startuml
+package 迭代器模式 {
+class DinnerMenu {
+- Map<String,MenuItem> menuItems
++ void add(MenuItem)
++ Iterator<MenuItem> createIterator()
++ int size()
+}
+
+
+class DinnerMenu$DinnerMenuIterator {
+- java.util.Iterator<MenuItem> iterator
++ boolean hasNext()
++ MenuItem next()
+}
+
+
+interface Iterator {
+~ boolean hasNext()
+~ T next()
+~ void remove()
+}
+
+class LunchMenu {
+- {static} int MAX_ITEMS
+- MenuItem[] menuItems
+- int numberOfItems
++ void add(MenuItem)
++ Iterator<MenuItem> createIterator()
++ int size()
+}
+
+
+class LunchMenu$LunchMenuIterator {
+- int position
++ boolean hasNext()
++ MenuItem next()
+}
+
+
+class Test {
++ {static} void main(String[])
+}
+
+class MenuItem {
+- String name
+- String description
+- boolean vegetarian
+- double price
++ String getName()
++ String getDescription()
++ boolean isVegetarian()
++ double getPrice()
++ String toString()
+}
+
+
+class BreakfastMenu {
+- List<MenuItem> menuItems
++ void add(MenuItem)
++ Iterator<MenuItem> createIterator()
++ int size()
+}
+
+
+class BreakfastMenu$BreakfastMenuIterator {
+- int position
++ boolean hasNext()
++ MenuItem next()
+}
+
+
+interface Aggregate {
+~ Iterator<T> createIterator()
+~ void add(T)
+~ int size()
+}
+
+class Waitress {
+- Aggregate<MenuItem> breakfastMenu
+- Aggregate<MenuItem> lunchMenu
+- Aggregate<MenuItem> dinnerMenu
++ void printMenu()
+- void printMenu(Iterator<MenuItem>)
++ void printVegetarianMenu()
+- void printVegetarianMenu(Iterator<MenuItem>)
++ boolean isItemVegetarian(String)
+- boolean isItemVegetarian(Iterator<MenuItem>,String)
+}
+
+
+}
+
+
+
+Aggregate <|.. DinnerMenu
+DinnerMenu +.. DinnerMenu$DinnerMenuIterator
+Iterator <|.. DinnerMenu$DinnerMenuIterator
+Aggregate <|.. LunchMenu
+LunchMenu +.. LunchMenu$LunchMenuIterator
+Iterator <|.. LunchMenu$LunchMenuIterator
+Aggregate <|.. BreakfastMenu
+BreakfastMenu +.. BreakfastMenu$BreakfastMenuIterator
+Iterator <|.. BreakfastMenu$BreakfastMenuIterator
+@enduml

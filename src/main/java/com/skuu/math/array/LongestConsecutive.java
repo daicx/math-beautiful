@@ -4,7 +4,7 @@ import java.util.HashSet;
 
 /**
  * 最长连续队列
- * <a href = "https://leetcode.cn/problems/longest-consecutive-sequence/?envType=study-plan-v2&envId=top-100-liked"/>
+ * <OrderCglibProxy href = "https://leetcode.cn/problems/longest-consecutive-sequence/?envType=study-plan-v2&envId=top-100-liked"/>
  *
  * @author dcx
  * @since 2024-11-26 14:05

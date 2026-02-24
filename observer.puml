@@ -1,0 +1,89 @@
+@startuml
+package 观察者模式{
+interface Observer {
+~ void update(float,float,float)
+}
+
+class HeatIndexDisplay {
+- float heatIndex
+- Subject weatherData
++ void update(float,float,float)
+- float computeHeatIndex(float,float)
++ void display()
+}
+
+
+class StatisticsDisplay {
+- float maxTemp
+- float minTemp
+- float tempSum
+- int numReadings
+- Subject weatherData
++ void update(float,float,float)
++ void display()
+}
+
+
+interface Subject {
+~ void registerObserver(Observer)
+~ void removeObserver(Observer)
+~ void notifyObservers()
+}
+
+interface DisplayElement {
+~ void display()
+}
+
+class ForecastDisplay {
+- float currentPressure
+- float lastPressure
+- Subject weatherData
++ void update(float,float,float)
++ void display()
+}
+
+
+class WeatherData {
+- List<Observer> observers
+- float temperature
+- float humidity
+- float pressure
++ void registerObserver(Observer)
++ void removeObserver(Observer)
++ void notifyObservers()
++ void measurementsChanged()
++ void setMeasurements(float,float,float)
++ int getObserverCount()
++ float getTemperature()
++ float getHumidity()
++ float getPressure()
+}
+
+
+class CurrentConditionsDisplay {
+- float temperature
+- float humidity
+- Subject weatherData
++ void update(float,float,float)
++ void display()
+}
+
+
+class Test {
++ {static} void main(String[])
+}
+
+
+}
+
+
+Observer <|.. HeatIndexDisplay
+DisplayElement <|.. HeatIndexDisplay
+Observer <|.. StatisticsDisplay
+DisplayElement <|.. StatisticsDisplay
+Observer <|.. ForecastDisplay
+DisplayElement <|.. ForecastDisplay
+Subject <|.. WeatherData
+Observer <|.. CurrentConditionsDisplay
+DisplayElement <|.. CurrentConditionsDisplay
+@enduml

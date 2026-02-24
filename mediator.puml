@@ -1,0 +1,58 @@
+@startuml
+package 中介者模式{
+class RegularUser {
++ void send(String)
++ void sendPrivate(String,User)
++ void receive(String,User)
+}
+
+abstract class User {
+# String name
+# ChatRoomMediator mediator
++ void setMediator(ChatRoomMediator)
++ {abstract}void send(String)
++ {abstract}void sendPrivate(String,User)
++ {abstract}void receive(String,User)
++ String getName()
+}
+
+
+interface ChatRoomMediator {
+~ void registerUser(User)
+~ void sendMessage(String,User)
+~ void sendPrivateMessage(String,User,User)
+}
+
+class Test {
++ {static} void main(String[])
+}
+
+class VIPUser {
++ void send(String)
++ void sendPrivate(String,User)
++ void receive(String,User)
+}
+
+class ChatRoom {
+- String roomName
+- Map<String,User> users
+- List<String> messageHistory
+- DateTimeFormatter formatter
++ void registerUser(User)
++ void sendMessage(String,User)
++ void sendPrivateMessage(String,User,User)
+- void notifyAllUsers(String,User)
++ List<String> getOnlineUsers()
++ List<String> getMessageHistory()
+- String getTimestamp()
++ String getRoomName()
++ void showRoomInfo()
+}
+
+}
+
+
+User <|-- RegularUser
+User <|-- VIPUser
+ChatRoomMediator <|.. ChatRoom
+@enduml

@@ -1,0 +1,49 @@
+@startuml
+package 模版方法{
+class ITWorker {
++ boolean isNeedPrintDate()
++ void work()
+}
+
+class QAWorker {
++ void work()
+}
+
+class OtherWorker {
++ void work()
+}
+
+class HRWorker {
++ void work()
+}
+
+class Test {
++ {static} void main(String[])
+}
+
+abstract class Worker {
+# String name
++ void workOneDay()
++ {abstract}void work()
++ boolean isNeedPrintDate()
+- void exitCompany()
+- void computerOn()
+- void computerOff()
+- void enterCompany()
+}
+
+
+class CTOWorker {
++ void work()
+}
+
+}
+
+
+
+Worker <|-- ITWorker
+Worker <|-- QAWorker
+Worker <|-- OtherWorker
+Worker <|-- HRWorker
+Worker <|-- CTOWorker
+@enduml

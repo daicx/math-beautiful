@@ -1,0 +1,83 @@
+@startuml
+package 外观模式{
+class Projector {
+- String description
++ void on()
++ void off()
++ void wideScreenMode()
++ void normalMode()
+}
+
+
+class DVDPlayer {
+- String description
+- String currentMovie
++ void on()
++ void off()
++ void play(String)
++ void pause()
++ void stop()
++ void eject()
+}
+
+
+class Screen {
+- String description
++ void up()
++ void down()
+}
+
+
+class Test {
++ {static} void main(String[])
+}
+
+class Amplifier {
+- String description
+- int volume
++ void on()
++ void off()
++ void setVolume(int)
++ void setSurroundSound()
++ void setStereoSound()
++ int getVolume()
+}
+
+
+class PopcornPopper {
+- String description
++ void on()
++ void off()
++ void pop()
+}
+
+
+class HomeTheaterFacade {
+- Amplifier amplifier
+- DVDPlayer dvdPlayer
+- Projector projector
+- TheaterLights lights
+- Screen screen
+- PopcornPopper popper
++ void watchMovie(String)
++ void endMovie()
++ void pauseMovie()
++ void resumeMovie(String)
++ void setVolume(int)
++ void setLights(int)
+}
+class TheaterLights {
+- String description
+- int brightness
++ void on()
++ void off()
++ void dim(int)
++ int getBrightness()
+}
+
+}
+
+
+
+
+@enduml

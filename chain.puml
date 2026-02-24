@@ -1,0 +1,66 @@
+@startuml
+package 责任链模式{
+class DepartmentManagerHandler {
+# ApprovalResult doHandle(LeaveRequest)
+# boolean canHandle(LeaveRequest)
+# String getHandlerName()
+}
+
+class Test {
++ {static} void main(String[])
+}
+
+class BoardHandler {
+# ApprovalResult doHandle(LeaveRequest)
+# boolean canHandle(LeaveRequest)
+# String getHandlerName()
+}
+
+class TeamLeaderHandler {
+# ApprovalResult doHandle(LeaveRequest)
+# boolean canHandle(LeaveRequest)
+# String getHandlerName()
+}
+
+class ApprovalResult {
+- boolean approved
+- String approver
+- String comment
++ {static} ApprovalResult approved(String,String)
++ {static} ApprovalResult rejected(String,String)
++ String toString()
+}
+
+
+class LeaveRequest {
+- String employeeName
+- int leaveDays
+- String reason
++ String toString()
++ {static} void main(String[])
+}
+
+
+abstract class ApprovalHandler {
+# ApprovalHandler nextHandler
++ void setNext(ApprovalHandler)
++ ApprovalResult handle(LeaveRequest)
+# {abstract}ApprovalResult doHandle(LeaveRequest)
+# {abstract}boolean canHandle(LeaveRequest)
+# {abstract}String getHandlerName()
+}
+
+
+class GeneralManagerHandler {
+# ApprovalResult doHandle(LeaveRequest)
+# boolean canHandle(LeaveRequest)
+# String getHandlerName()
+}
+
+}
+
+ApprovalHandler <|-- DepartmentManagerHandler
+ApprovalHandler <|-- BoardHandler
+ApprovalHandler <|-- TeamLeaderHandler
+ApprovalHandler <|-- GeneralManagerHandler
+@enduml

@@ -1,0 +1,17 @@
+# application.yml
+resilience4j:
+  circuitbreaker:
+    instances:
+      externalDataService:
+        failureRateThreshold: 50          # 失败率超过50%触发熔断
+        minimumNumberOfCalls: 5           # 至少调用5次才计算失败率
+        waitDurationInOpenState: 10s      # 熔断后10秒进入半开状态
+        slidingWindowSize: 10             # 滑动窗口大小
+        permittedNumberOfCallsInHalfOpenState: 3
+
+  retry:
+    instances:
+      externalDataService:
+        maxAttempts: 2                    # 最多重试2次（共3次尝试）
+        waitDuration: 1000                # 重试间隔1秒
+        enableExponentialBackoff: false

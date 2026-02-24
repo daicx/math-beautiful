@@ -1,0 +1,62 @@
+@startuml
+package 装饰者模式{
+class MilkDecorator {
++ String getDescription()
++ double getCost()
+}
+
+class CaramelDecorator {
++ String getDescription()
++ double getCost()
+}
+
+abstract class CoffeeDecorator {
+# Coffee coffee
++ {abstract}String getDescription()
++ {abstract}double getCost()
+}
+
+
+interface Coffee {
+~ String getDescription()
+~ double getCost()
+~ String getDetails()
+}
+
+class Espresso {
++ String getDescription()
++ double getCost()
+}
+
+class Americano {
++ String getDescription()
++ double getCost()
+}
+
+class Test {
++ {static} void main(String[])
+- {static} void printCoffee(Coffee)
+}
+
+class VanillaDecorator {
++ String getDescription()
++ double getCost()
+}
+
+class Cappuccino {
++ String getDescription()
++ double getCost()
+}
+
+
+}
+
+
+CoffeeDecorator <|-- MilkDecorator
+CoffeeDecorator <|-- CaramelDecorator
+Coffee <|.. CoffeeDecorator
+Coffee <|.. Espresso
+Coffee <|.. Americano
+CoffeeDecorator <|-- VanillaDecorator
+Coffee <|.. Cappuccino
+@enduml

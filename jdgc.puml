@@ -1,0 +1,26 @@
+@startuml
+package 简单工厂{
+class Circle {
++ void draw()
+}
+
+class Rectangle {
++ void draw()
+}
+
+interface Shape {
+~ void draw()
+}
+
+class Test {
++ {static} void main(String[])
+}
+
+class SimpleFactory {
++ Shape createShape(String)
+}
+}
+
+Shape <|.. Circle
+Shape <|.. Rectangle
+@enduml

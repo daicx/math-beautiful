@@ -1,0 +1,85 @@
+@startuml
+package 桥接模式{
+abstract class Shape {
+# DrawingAPI drawingAPI
+# String color
+# int x
++ {abstract}void draw()
++ void move(int,int)
++ void changeColor(String)
++ {abstract}String getShapeInfo()
++ String getDrawingAPIInfo()
+}
+
+
+class Test {
++ {static} void main(String[])
+}
+
+interface DrawingAPI {
+~ void drawCircle(int,int,int,String)
+~ void drawRectangle(int,int,int,int,String)
+~ void drawTriangle(int,int,int,int,int,int,String)
+~ String getAPIName()
+}
+
+class Triangle {
+- int x2
++ void draw()
++ String getShapeInfo()
++ void setVertices(int,int,int,int,int,int)
++ int[][] getVertices()
+}
+
+
+class Rectangle {
+- int width
++ void draw()
++ String getShapeInfo()
++ void setSize(int,int)
++ int getWidth()
++ int getHeight()
+}
+
+
+class MacDrawingAPI {
++ void drawCircle(int,int,int,String)
++ void drawRectangle(int,int,int,int,String)
++ void drawTriangle(int,int,int,int,int,int,String)
++ String getAPIName()
+}
+
+class WindowsDrawingAPI {
++ void drawCircle(int,int,int,String)
++ void drawRectangle(int,int,int,int,String)
++ void drawTriangle(int,int,int,int,int,int,String)
++ String getAPIName()
+}
+
+class LinuxDrawingAPI {
++ void drawCircle(int,int,int,String)
++ void drawRectangle(int,int,int,int,String)
++ void drawTriangle(int,int,int,int,int,int,String)
++ String getAPIName()
+}
+
+class Circle {
+- int radius
++ void draw()
++ String getShapeInfo()
++ void setRadius(int)
++ int getRadius()
+}
+
+}
+
+
+
+
+Shape <|-- Triangle
+Shape <|-- Rectangle
+DrawingAPI <|.. MacDrawingAPI
+DrawingAPI <|.. WindowsDrawingAPI
+DrawingAPI <|.. LinuxDrawingAPI
+Shape <|-- Circle
+@enduml

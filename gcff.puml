@@ -1,0 +1,62 @@
+@startuml
+package 工厂方法{
+class Car {
++ void start()
++ void stop()
++ void drive()
++ String getType()
+}
+
+class Motorcycle {
++ void start()
++ void stop()
++ void drive()
++ String getType()
+}
+
+interface Product {
+~ void start()
+~ void stop()
+~ void drive()
+~ String getType()
+}
+
+class MotorcycleFactory {
++ Product createProduct()
+}
+
+class Bicycle {
++ void start()
++ void stop()
++ void drive()
++ String getType()
+}
+
+class BicycleFactory {
++ Product createProduct()
+}
+
+abstract class ProductAbstractFactory {
++ {abstract}Product createProduct()
++ void createAndUseProduct()
+}
+
+class Test {
++ {static} void main(String[])
+}
+
+class CarFactory {
++ Product createProduct()
+}
+
+
+
+Product <|.. Car
+Product <|.. Motorcycle
+ProductAbstractFactory <|-- MotorcycleFactory
+Product <|.. Bicycle
+ProductAbstractFactory <|-- BicycleFactory
+ProductAbstractFactory <|-- CarFactory
+}
+
+@enduml

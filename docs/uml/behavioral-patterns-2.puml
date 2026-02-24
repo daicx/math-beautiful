@@ -1,0 +1,259 @@
+@startuml 行为型设计模式（第2部分）
+
+title 行为型设计模式 UML类图（第2部分）
+
+' ==================== 19. 观察者模式 ====================
+package "19. 观察者模式 (Observer)" {
+    interface Subject {
+        + registerObserver(observer: Observer): void
+        + removeObserver(observer: Observer): void
+        + notifyObservers(): void
+    }
+    
+    interface Observer {
+        + update(temperature: float, humidity: float, pressure: float): void
+    }
+    
+    class WeatherData implements Subject {
+        - observers: List<Observer>
+        - temperature: float
+        - humidity: float
+        - pressure: float
+        + registerObserver(observer: Observer): void
+        + removeObserver(observer: Observer): void
+        + notifyObservers(): void
+        + setMeasurements(...): void
+    }
+    
+    class CurrentConditionsDisplay implements Observer {
+        - temperature: float
+        - humidity: float
+        + update(...): void
+        + display(): void
+    }
+    
+    WeatherData o-- Observer
+    
+    note right of Subject
+        定义对象间的一对多依赖
+        当对象状态改变时通知所有依赖者
+        
+        优点：
+        - 松耦合
+        - 动态订阅
+        - 广播通信
+        
+        应用：
+        - 事件监听
+        - MVC架构
+        - 消息队列
+    end note
+}
+
+' ==================== 20. 状态模式 ====================
+package "20. 状态模式 (State)" {
+    interface OrderState {
+        + pay(context: OrderContext): void
+        + ship(context: OrderContext): void
+        + cancel(context: OrderContext): void
+    }
+    
+    class PendingPaymentState implements OrderState {
+        + pay(context: OrderContext): void
+        + ship(context: OrderContext): void
+        + cancel(context: OrderContext): void
+    }
+    
+    class PaidState implements OrderState {
+        + pay(context: OrderContext): void
+        + ship(context: OrderContext): void
+        + cancel(context: OrderContext): void
+    }
+    
+    class OrderContext {
+        - currentState: OrderState
+        - order: Order
+        + setState(state: OrderState): void
+        + pay(): void
+        + ship(): void
+        + cancel(): void
+    }
+    
+    OrderContext o-- OrderState
+    
+    note right of OrderState
+        允许对象在内部状态改变时
+        改变它的行为
+        
+        优点：
+        - 封装状态转换规则
+        - 状态类职责单一
+        - 易于扩展新状态
+        
+        应用：
+        - 订单状态流转
+        - TCP连接状态
+        - 工作流
+    end note
+}
+
+' ==================== 21. 策略模式 ====================
+package "21. 策略模式 (Strategy)" {
+    interface IAttackBehavior {
+        + attack(): void
+    }
+    
+    class AttackXL implements IAttackBehavior {
+        + attack(): void
+    }
+    
+    interface IDefendBehavior {
+        + defend(): void
+    }
+    
+    class DefendTBS implements IDefendBehavior {
+        + defend(): void
+    }
+    
+    abstract class Role {
+        # attackBehavior: IAttackBehavior
+        # defendBehavior: IDefendBehavior
+        + setAttackBehavior(behavior: IAttackBehavior): void
+        + setDefendBehavior(behavior: IDefendBehavior): void
+        + performAttack(): void
+        + performDefend(): void
+    }
+    
+    class RoleA extends Role {
+    }
+    
+    Role o-- IAttackBehavior
+    Role o-- IDefendBehavior
+    
+    note right of Role
+        定义一系列算法并封装
+        使它们可以互相替换
+        
+        优点：
+        - 算法独立变化
+        - 避免多重条件判断
+        - 符合开闭原则
+        
+        应用：
+        - 支付方式
+        - 排序算法
+        - 压缩算法
+    end note
+}
+
+' ==================== 22. 模板方法模式 ====================
+package "22. 模板方法模式 (Template Method)" {
+    abstract class Worker {
+        + workOneDay(): void
+        # {abstract} work(): void
+        # {abstract} getWorkContent(): String
+        - checkIn(): void
+        - eat(): void
+        - checkOut(): void
+    }
+    
+    class ITWorker extends Worker {
+        # work(): void
+        # getWorkContent(): String
+    }
+    
+    class HRWorker extends Worker {
+        # work(): void
+        # getWorkContent(): String
+    }
+    
+    class QAWorker extends Worker {
+        # work(): void
+        # getWorkContent(): String
+    }
+    
+    note right of Worker
+        定义算法骨架
+        将某些步骤延迟到子类
+        
+        优点：
+        - 封装不变部分
+        - 扩展可变部分
+        - 提取公共代码
+        
+        应用：
+        - Servlet生命周期
+        - Spring JdbcTemplate
+        - 通用业务流程
+    end note
+}
+
+' ==================== 23. 访问者模式 ====================
+package "23. 访问者模式 (Visitor)" {
+    interface Visitor {
+        + visit(engineer: Engineer): void
+        + visit(manager: Manager): void
+        + visit(ceo: CEO): void
+    }
+    
+    interface Employee {
+        + accept(visitor: Visitor): void
+    }
+    
+    class Engineer implements Employee {
+        - name: String
+        - workingYears: int
+        - codeLines: int
+        + accept(visitor: Visitor): void
+    }
+    
+    class Manager implements Employee {
+        - name: String
+        - workingYears: int
+        - teamSize: int
+        + accept(visitor: Visitor): void
+    }
+    
+    class SalaryCalculator implements Visitor {
+        - totalSalary: double
+        + visit(engineer: Engineer): void
+        + visit(manager: Manager): void
+        + visit(ceo: CEO): void
+    }
+    
+    class PerformanceEvaluator implements Visitor {
+        + visit(engineer: Engineer): void
+        + visit(manager: Manager): void
+        + visit(ceo: CEO): void
+    }
+    
+    class Company {
+        - employees: List<Employee>
+        + addEmployee(employee: Employee): void
+        + accept(visitor: Visitor): void
+    }
+    
+    Company o-- Employee
+    
+    note right of Visitor
+        在不改变元素类的前提下
+        定义作用于这些元素的新操作
+        
+        核心：双分派机制
+        
+        优点：
+        - 符合开闭原则
+        - 相关操作集中
+        - 易于添加新操作
+        
+        缺点：
+        - 难以添加新元素
+        
+        应用：
+        - 编译器AST遍历
+        - XML/DOM操作
+    end note
+}
+
+@enduml
+

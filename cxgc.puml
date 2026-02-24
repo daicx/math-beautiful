@@ -1,0 +1,77 @@
+@startuml
+package 抽象工厂{
+interface OperatingSystem {
+~ void boot()
+~ void shutdown()
+~ String getName()
+}
+
+interface SystemFactory {
+~ OperatingSystem createOperatingSystem()
+~ Browser createBrowser()
+}
+
+class ComputerSystem {
+- OperatingSystem os
+- Browser browser
++ void startSystem()
++ void shutdownSystem()
++ void showSystemInfo()
+}
+
+
+class MacSystemFactory {
++ OperatingSystem createOperatingSystem()
++ Browser createBrowser()
+}
+
+class WindowsSystemFactory {
++ OperatingSystem createOperatingSystem()
++ Browser createBrowser()
+}
+
+class WindowsOS {
++ void boot()
++ void shutdown()
++ String getName()
+}
+
+class Test {
++ {static} void main(String[])
+}
+
+class SafariBrowser {
++ void open()
++ void close()
++ String getName()
+}
+
+interface Browser {
+~ void open()
+~ void close()
+~ String getName()
+}
+
+class MacOS {
++ void boot()
++ void shutdown()
++ String getName()
+}
+
+class ChromeBrowser {
++ void open()
++ void close()
++ String getName()
+}
+}
+
+
+
+
+SystemFactory <|.. MacSystemFactory
+SystemFactory <|.. WindowsSystemFactory
+OperatingSystem <|.. WindowsOS
+Browser <|.. SafariBrowser
+OperatingSystem <|.. MacOS
+Browser <|.. ChromeBrowser
+@enduml

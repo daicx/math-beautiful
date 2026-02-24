@@ -1,0 +1,325 @@
+@startuml 结构型设计模式
+
+title 结构型设计模式 UML类图
+
+' ==================== 6. 适配器模式 ====================
+package "6. 适配器模式 (Adapter)" {
+    interface MediaPlayer {
+        + play(audioType: String, fileName: String): void
+        + stop(): void
+        + pause(): void
+    }
+    
+    interface AdvancedMediaPlayer {
+        + playVlc(fileName: String): void
+        + playMp4(fileName: String): void
+        + stop(): void
+    }
+    
+    class VlcPlayer implements AdvancedMediaPlayer {
+        + playVlc(fileName: String): void
+        + playMp4(fileName: String): void
+        + stop(): void
+    }
+    
+    class Mp4Player implements AdvancedMediaPlayer {
+        + playVlc(fileName: String): void
+        + playMp4(fileName: String): void
+        + stop(): void
+    }
+    
+    class MediaAdapter implements MediaPlayer {
+        - advancedMediaPlayer: AdvancedMediaPlayer
+        + MediaAdapter(audioType: String)
+        + play(audioType: String, fileName: String): void
+        + stop(): void
+        + pause(): void
+    }
+    
+    class AudioPlayer implements MediaPlayer {
+        - mediaAdapter: MediaAdapter
+        + play(audioType: String, fileName: String): void
+        + stop(): void
+        + pause(): void
+    }
+    
+    MediaAdapter o-- AdvancedMediaPlayer
+    AudioPlayer o-- MediaAdapter
+    
+    note right of MediaAdapter
+        将一个接口转换成客户期望的另一个接口
+        
+        类型：
+        - 类适配器（继承）
+        - 对象适配器（组合）★
+        - 接口适配器
+    end note
+}
+
+' ==================== 7. 桥接模式 ====================
+package "7. 桥接模式 (Bridge)" {
+    interface DrawingAPI {
+        + drawCircle(x: int, y: int, radius: int, color: String): void
+        + drawRectangle(x: int, y: int, width: int, height: int, color: String): void
+    }
+    
+    class WindowsDrawingAPI implements DrawingAPI {
+        + drawCircle(...): void
+        + drawRectangle(...): void
+    }
+    
+    class MacDrawingAPI implements DrawingAPI {
+        + drawCircle(...): void
+        + drawRectangle(...): void
+    }
+    
+    abstract class Shape {
+        # drawingAPI: DrawingAPI
+        + Shape(drawingAPI: DrawingAPI)
+        + {abstract} draw(): void
+        + move(x: int, y: int): void
+    }
+    
+    class Circle extends Shape {
+        - radius: int
+        + Circle(drawingAPI: DrawingAPI, ...)
+        + draw(): void
+    }
+    
+    class Rectangle extends Shape {
+        - width: int
+        - height: int
+        + Rectangle(drawingAPI: DrawingAPI, ...)
+        + draw(): void
+    }
+    
+    Shape o-- DrawingAPI
+    
+    note right of Shape
+        将抽象部分与实现部分分离
+        使它们可以独立变化
+        
+        优点：
+        - 分离抽象和实现
+        - 避免继承爆炸
+        - 可以运行时切换实现
+    end note
+}
+
+' ==================== 8. 组合模式 ====================
+package "8. 组合模式 (Composite)" {
+    interface FileSystemComponent {
+        + getName(): String
+        + getSize(): long
+        + display(prefix: String): void
+        + add(component: FileSystemComponent): void
+        + remove(component: FileSystemComponent): void
+        + isContainer(): boolean
+    }
+    
+    class File implements FileSystemComponent {
+        - name: String
+        - size: long
+        + getName(): String
+        + getSize(): long
+        + display(prefix: String): void
+        + isContainer(): boolean
+    }
+    
+    class Folder implements FileSystemComponent {
+        - name: String
+        - children: List<FileSystemComponent>
+        + add(component: FileSystemComponent): void
+        + remove(component: FileSystemComponent): void
+        + getSize(): long
+        + display(prefix: String): void
+        + isContainer(): boolean
+    }
+    
+    Folder o-- FileSystemComponent
+    
+    note right of FileSystemComponent
+        将对象组合成树形结构
+        表示"部分-整体"的层次结构
+        
+        优点：
+        - 统一叶子和容器的接口
+        - 简化客户端代码
+        - 易于添加新的组件
+    end note
+}
+
+' ==================== 9. 装饰模式 ====================
+package "9. 装饰模式 (Decorator)" {
+    interface Coffee {
+        + getDescription(): String
+        + getCost(): double
+    }
+    
+    class Espresso implements Coffee {
+        + getDescription(): String
+        + getCost(): double
+    }
+    
+    abstract class CoffeeDecorator implements Coffee {
+        # coffee: Coffee
+        + CoffeeDecorator(coffee: Coffee)
+        + {abstract} getDescription(): String
+        + {abstract} getCost(): double
+    }
+    
+    class MilkDecorator extends CoffeeDecorator {
+        + getDescription(): String
+        + getCost(): double
+    }
+    
+    class SugarDecorator extends CoffeeDecorator {
+        + getDescription(): String
+        + getCost(): double
+    }
+    
+    CoffeeDecorator o-- Coffee
+    
+    note right of CoffeeDecorator
+        动态地给对象添加额外的职责
+        
+        优点：
+        - 比继承更灵活
+        - 可以动态组合
+        - 符合开闭原则
+        
+        典型应用：
+        - Java I/O流
+    end note
+}
+
+' ==================== 10. 外观模式 ====================
+package "10. 外观模式 (Facade)" {
+    class Amplifier {
+        + on(): void
+        + off(): void
+        + setVolume(level: int): void
+    }
+    
+    class DVDPlayer {
+        + on(): void
+        + off(): void
+        + play(movie: String): void
+    }
+    
+    class Projector {
+        + on(): void
+        + off(): void
+    }
+    
+    class HomeTheaterFacade {
+        - amplifier: Amplifier
+        - dvdPlayer: DVDPlayer
+        - projector: Projector
+        + watchMovie(movie: String): void
+        + endMovie(): void
+    }
+    
+    HomeTheaterFacade o-- Amplifier
+    HomeTheaterFacade o-- DVDPlayer
+    HomeTheaterFacade o-- Projector
+    
+    note right of HomeTheaterFacade
+        为子系统提供统一的高层接口
+        
+        优点：
+        - 简化接口
+        - 降低耦合
+        - 遵循最少知识原则
+        
+        应用：
+        - API网关
+        - 三层架构的入口
+    end note
+}
+
+' ==================== 11. 享元模式 ====================
+package "11. 享元模式 (Flyweight)" {
+    interface CharacterFlyweight {
+        + display(fontSize: int, color: String, position: String): void
+    }
+    
+    class ConcreteCharacter implements CharacterFlyweight {
+        - character: char
+        + display(...): void
+    }
+    
+    class CharacterFactory {
+        - flyweightPool: Map<Character, CharacterFlyweight>
+        - {static} instance: CharacterFactory
+        + {static} getInstance(): CharacterFactory
+        + getCharacter(c: char): CharacterFlyweight
+        + getPoolSize(): int
+    }
+    
+    class Editor {
+        - characters: List<CharacterContext>
+        - factory: CharacterFactory
+        + insertCharacter(...): void
+        + display(): void
+    }
+    
+    CharacterFactory ..> ConcreteCharacter : creates
+    Editor --> CharacterFactory
+    
+    note right of CharacterFactory
+        运用共享技术支持大量细粒度对象
+        
+        核心概念：
+        - 内部状态（可共享）
+        - 外部状态（不可共享）
+        
+        应用：
+        - String常量池
+        - 连接池、线程池
+    end note
+}
+
+' ==================== 12. 代理模式 ====================
+package "12. 代理模式 (Proxy)" {
+    interface Image {
+        + display(): void
+        + getImageInfo(): String
+    }
+    
+    class RealImage implements Image {
+        - filename: String
+        + RealImage(filename: String)
+        - loadFromDisk(): void
+        + display(): void
+        + getImageInfo(): String
+    }
+    
+    class ImageProxy implements Image {
+        - realImage: RealImage
+        - filename: String
+        + ImageProxy(filename: String)
+        + display(): void
+        + getImageInfo(): String
+    }
+    
+    ImageProxy o-- RealImage
+    
+    note right of ImageProxy
+        为其他对象提供代理以控制访问
+        
+        类型：
+        - 虚拟代理（延迟加载）
+        - 保护代理（权限控制）
+        - 远程代理（RPC）
+        - 智能引用
+        
+        实现：
+        - 静态代理
+        - JDK动态代理
+        - CGLIB代理
+    end note
+}
+
+@enduml
+

@@ -1,0 +1,50 @@
+@startuml
+package 组合模式{
+interface FileSystemComponent {
+~ String getName()
+~ long getSize()
+~ void display(String)
+~ void add(FileSystemComponent)
+~ void remove(FileSystemComponent)
+~ FileSystemComponent getChild(int)
+~ boolean isContainer()
+}
+
+class Test {
++ {static} void main(String[])
+- {static} String formatSize(long)
+}
+
+class Folder {
+- String name
+- List<FileSystemComponent> children
++ String getName()
++ long getSize()
++ void display(String)
++ void add(FileSystemComponent)
++ void remove(FileSystemComponent)
++ FileSystemComponent getChild(int)
++ boolean isContainer()
++ int getChildCount()
+- String formatSize(long)
+}
+
+
+class File {
+- String name
+- long size
++ String getName()
++ long getSize()
++ void display(String)
++ boolean isContainer()
+- String formatSize(long)
+}
+
+
+}
+
+
+
+FileSystemComponent <|.. Folder
+FileSystemComponent <|.. File
+@enduml

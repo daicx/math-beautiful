@@ -12,7 +12,7 @@ import java.util.List;
 public class MathTest {
 
 
-    public static void main(String[] args) {
+    public static void main1(String[] args) {
         int[] ints = new int[2];
         int[] ints1 = {12,21};
         int[] ints2 = {};
@@ -21,4 +21,12 @@ public class MathTest {
         double bill = costBeforeTax.stream().map((cost) -> cost + 0.12*cost).reduce((sum, cost) -> sum + cost).get();
         System.out.println("Total : " + bill);
     }
+
+    public static void main(String[] args) {
+        String silenceLock = String.format("%s::%s", "ddddd", 111);
+        System.out.println(silenceLock);
+Byte a = 1;
+        System.out.println(a.toString());
+    }
+
 }

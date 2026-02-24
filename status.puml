@@ -1,0 +1,136 @@
+@startuml
+package 状态模式{
+class OrderContext {
+- OrderState currentState
+- Order order
++ void changeState(OrderStatusEnum)
++ void pay()
++ void deliver()
++ void cancel()
++ void complete()
+- void saveToDatabase()
++ OrderState getCurrentState()
++ Order getOrder()
++ String getOrderId()
++ String getCustomerName()
++ double getAmount()
++ OrderStatusEnum getStatus()
++ java.util.Map<String,Object> getOrderData()
++ long getCreatedAt()
++ long getUpdatedAt()
++ String toString()
+}
+
+
+class RefundingState {
++ void pay(OrderContext)
++ void deliver(OrderContext)
++ void cancel(OrderContext)
++ void complete(OrderContext)
++ OrderStatusEnum getStatus()
+}
+
+class PaidState {
++ void pay(OrderContext)
++ void deliver(OrderContext)
++ void cancel(OrderContext)
++ void complete(OrderContext)
++ OrderStatusEnum getStatus()
+}
+
+class OrderStatePatternTest {
++ {static} void main(String[])
+}
+
+class OrderService {
++ OrderContext loadOrderFromDatabase(String)
++ List<OrderContext> loadOrdersByStatus(OrderStatusEnum)
++ OrderContext createOrder(String,String,String,String,double)
+}
+
+class OrderStateFactory {
++ {static} OrderState createState(OrderStatusEnum)
+}
+
+interface OrderState {
+~ void pay(OrderContext)
+~ void deliver(OrderContext)
+~ void cancel(OrderContext)
+~ void complete(OrderContext)
+~ OrderStatusEnum getStatus()
+}
+
+class CancelledState {
++ void pay(OrderContext)
++ void deliver(OrderContext)
++ void cancel(OrderContext)
++ void complete(OrderContext)
++ OrderStatusEnum getStatus()
+}
+
+class PendingPaymentState {
++ void pay(OrderContext)
++ void deliver(OrderContext)
++ void cancel(OrderContext)
++ void complete(OrderContext)
++ OrderStatusEnum getStatus()
+}
+
+class Order {
+- String orderId
+- String customerName
+- String userId
+- String productId
+- String productName
+- double amount
+- OrderStatusEnum status
+- Map<String,Object> orderData
+- long createdAt
+- long updatedAt
++ void updateStatus(OrderStatusEnum)
++ void addOrderData(String,Object)
++ Object getOrderData(String)
+}
+
+
+enum OrderStatusEnum {
++  PENDING_PAYMENT
++  PAID
++  SHIPPED
++  COMPLETED
++  CANCELLED
++  REFUNDING
+- String code
+- String name
++ String getCode()
++ String getName()
+}
+
+
+class ShippedState {
++ void pay(OrderContext)
++ void deliver(OrderContext)
++ void cancel(OrderContext)
++ void complete(OrderContext)
++ OrderStatusEnum getStatus()
+}
+
+class CompletedState {
++ void pay(OrderContext)
++ void deliver(OrderContext)
++ void cancel(OrderContext)
++ void complete(OrderContext)
++ OrderStatusEnum getStatus()
+}
+
+}
+
+
+
+OrderState <|.. RefundingState
+OrderState <|.. PaidState
+OrderState <|.. CancelledState
+OrderState <|.. PendingPaymentState
+OrderState <|.. ShippedState
+OrderState <|.. CompletedState
+@enduml

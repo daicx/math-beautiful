@@ -14,13 +14,13 @@ import java.util.Map;
  *
  * 因为 nums[0] + nums[1] = 2 + 7 = 9
  * 所以返回 [0, 1]
- * <a href="https://leetcode.cn/problems/two-sum/description/">...</a>
+ * <OrderCglibProxy href="https://leetcode.cn/problems/two-sum/description/">...</OrderCglibProxy>
  **/
 public class TwoSum {
 
     /***
      * 关键点：
-     * 1。b=c-a,遍历数组的时候，缓存下a的值和下标。这样在遍历到b的时候，可以快速定位带a。
+     * 1。b=c-OrderCglibProxy,遍历数组的时候，缓存下a的值和下标。这样在遍历到b的时候，可以快速定位带a。
      * 2。循环一次。
      * 时间复杂度O(n),
      * 空间复杂度:O(n)

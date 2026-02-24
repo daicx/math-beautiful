@@ -1,0 +1,61 @@
+@startuml
+package 适配器模式{
+class MediaAdapter {
+- AdvancedMediaPlayer advancedMediaPlayer
++ void play(String,String)
++ void stop()
++ void pause()
+}
+
+
+class Mp4Player {
++ void playVlc(String)
++ void playMp4(String)
++ void stop()
+}
+
+class Mp3Player {
++ void playMp3(String)
++ void stop()
++ void pause()
+}
+
+class AudioPlayer {
+- MediaAdapter mediaAdapter
+- Mp3Player mp3Player
++ void play(String,String)
++ void stop()
++ void pause()
+}
+
+
+class VlcPlayer {
++ void playVlc(String)
++ void playMp4(String)
++ void stop()
+}
+
+interface AdvancedMediaPlayer {
+~ void playVlc(String)
+~ void playMp4(String)
+~ void stop()
+}
+
+class Test {
++ {static} void main(String[])
+}
+
+interface MediaPlayer {
+~ void play(String,String)
+~ void stop()
+~ void pause()
+}
+}
+
+
+
+MediaPlayer <|.. MediaAdapter
+AdvancedMediaPlayer <|.. Mp4Player
+MediaPlayer <|.. AudioPlayer
+AdvancedMediaPlayer <|.. VlcPlayer
+@enduml

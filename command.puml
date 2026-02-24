@@ -1,0 +1,129 @@
+@startuml
+package 命令模式{
+class MacroCommand {
+- Command[] commands
+- String description
++ void execute()
++ void undo()
++ String getDescription()
+}
+
+
+class Light {
+- String location
+- int brightness
++ void on()
++ void off()
++ void dim(int)
++ int getBrightness()
++ String getLocation()
+}
+
+
+class Test {
++ {static} void main(String[])
+}
+
+interface Command {
+~ void execute()
+~ void undo()
+~ String getDescription()
+}
+
+class TVOffCommand {
+- TV tv
++ void execute()
++ void undo()
++ String getDescription()
+}
+
+
+class TV {
+- String location
+- boolean isOn
+- int channel
+- int volume
++ void on()
++ void off()
++ void setChannel(int)
++ void setVolume(int)
++ boolean isOn()
++ int getChannel()
++ int getVolume()
+}
+
+
+class NoCommand {
++ void execute()
++ void undo()
++ String getDescription()
+}
+
+class AirConditionerOnCommand {
+- AirConditioner ac
++ void execute()
++ void undo()
++ String getDescription()
+}
+
+
+class RemoteControl {
+- Command[] onCommands
+- Command[] offCommands
+- Stack<Command> undoStack
++ void setCommand(int,Command,Command)
++ void onButtonWasPressed(int)
++ void offButtonWasPressed(int)
++ void undoButtonWasPressed()
++ void showStatus()
+}
+
+
+class TVOnCommand {
+- TV tv
++ void execute()
++ void undo()
++ String getDescription()
+}
+
+
+class LightOnCommand {
+- Light light
+- int previousBrightness
++ void execute()
++ void undo()
++ String getDescription()
+}
+
+
+class AirConditioner {
+- String location
+- boolean isOn
+- int temperature
++ void on()
++ void off()
++ void setTemperature(int)
++ boolean isOn()
++ int getTemperature()
+}
+
+
+class LightOffCommand {
+- Light light
+- int previousBrightness
++ void execute()
++ void undo()
++ String getDescription()
+}
+
+}
+
+
+Command <|.. MacroCommand
+Command <|.. TVOffCommand
+Command <|.. NoCommand
+Command <|.. AirConditionerOnCommand
+Command <|.. TVOnCommand
+Command <|.. LightOnCommand
+Command <|.. LightOffCommand
+@enduml
