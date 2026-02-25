@@ -16,9 +16,9 @@
    - `StateFactory`: 创建和管理状态对象
    - 使用单例模式 + 对象缓存，提高性能
 
-3. **观察者模式 (Observer Pattern)**
-   - `OrderObserver`: 监听订单状态变化
-   - 实现日志记录、通知发送、库存管理等
+3. **Spring Events（替代已废弃的 java.util.Observer）**
+   - `OrderStatusChangedEvent`: 订单状态变更事件
+   - `@EventListener` 监听器：日志、通知、库存等
 
 4. **责任链模式 (Chain of Responsibility)**
    - `StateTransitionValidator`: 验证状态转换的合法性
@@ -55,12 +55,11 @@ ordersystem/
 │   └── StateFactory.java           # 状态工厂
 ├── validator/                      # 验证器
 │   └── StateTransitionValidator.java
-├── observer/                       # 观察者模式
-│   ├── OrderObserver.java         # 观察者接口
-│   └── impl/                       # 具体观察者
-│       ├── LoggingObserver.java
-│       ├── NotificationObserver.java
-│       └── InventoryObserver.java
+├── event/                          # Spring Events
+│   ├── OrderStatusChangedEvent.java
+│   ├── OrderStatusChangedLoggingListener.java
+│   ├── OrderStatusChangedNotificationListener.java
+│   └── OrderStatusChangedInventoryListener.java
 ├── service/                        # 服务层
 │   └── OrderService.java           # 订单服务
 ├── OrderSystemTest.java            # 测试类
@@ -101,12 +100,12 @@ REFUNDING (退款中)
 - 支持业务规则验证
 
 ### 2. 状态变化通知
-- 自动通知所有观察者
-- 支持日志记录、用户通知、库存管理等
+- 通过 Spring Events 发布 `OrderStatusChangedEvent`
+- `@EventListener` 监听器：日志、用户通知、库存等
 
 ### 3. 可扩展性
 - 新增状态：只需实现 `OrderState` 接口
-- 新增观察者：实现 `OrderObserver` 接口并注册
+- 新增监听：新增 `@Component` 并 `@EventListener(OrderStatusChangedEvent.class)`
 - 新增验证规则：扩展 `StateTransitionValidator`
 
 ### 4. 类型安全
@@ -171,18 +170,16 @@ public class PartialRefundState extends AbstractOrderState {
 stateCache.put(OrderStatus.PARTIAL_REFUND, new PartialRefundState());
 ```
 
-### 添加新观察者
+### 添加新监听器（Spring Events）
 
 ```java
-public class EmailObserver implements OrderObserver {
-    @Override
-    public void onStatusChanged(Order order, OrderStatus previousStatus, OrderStatus newStatus) {
-        // 发送邮件通知
+@Component
+public class OrderStatusChangedEmailListener {
+    @EventListener
+    public void onOrderStatusChanged(OrderStatusChangedEvent event) {
+        // 发送邮件通知：event.getOrder(), event.getPreviousStatus(), event.getNewStatus()
     }
 }
-
-// 在 OrderService 中注册
-context.addObserver(new EmailObserver());
 ```
 
 ### 添加验证规则

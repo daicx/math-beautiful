@@ -1,6 +1,6 @@
 package com.skuu.demo.ordersystem.state;
 
-import com.skuu.demo.ordersystem.model.OrderStatusEnum;
+import com.skuu.demo.ordersystem.enums.OrderStatusEnum;
 
 /**
  * @author dcx
@@ -8,36 +8,36 @@ import com.skuu.demo.ordersystem.model.OrderStatusEnum;
  * 定义订单在某个状态下的所有行为（动作、转换规则、生命周期）
  * @create 2025-01-27
  */
-public interface OrderStateBehavior {
+public interface OrderState {
     /**
      * 支付订单
      */
-    void pay(StateContext context);
+    void pay(OrderStateContext context);
     
     /**
      * 发货
      */
-    void ship(StateContext context);
+    void ship(OrderStateContext context);
     
     /**
      * 确认收货
      */
-    void confirm(StateContext context);
+    void confirm(OrderStateContext context);
     
     /**
      * 完成订单
      */
-    void complete(StateContext context);
+    void complete(OrderStateContext context);
     
     /**
      * 取消订单
      */
-    void cancel(StateContext context);
+    void cancel(OrderStateContext context);
     
     /**
      * 申请退款
      */
-    void refund(StateContext context);
+    void refund(OrderStateContext context);
     
     /**
      * 获取当前状态
@@ -52,14 +52,14 @@ public interface OrderStateBehavior {
     /**
      * 状态进入时的钩子方法
      */
-    default void onEnter(StateContext context) {
+    default void onEnter(OrderStateContext context) {
         // 默认实现为空，子类可以覆盖
     }
     
     /**
      * 状态退出时的钩子方法
      */
-    default void onExit(StateContext context) {
+    default void onExit(OrderStateContext context) {
         // 默认实现为空，子类可以覆盖
     }
 }

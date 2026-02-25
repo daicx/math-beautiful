@@ -1,6 +1,6 @@
 package com.skuu.demo.ordersystem.state;
 
-import com.skuu.demo.ordersystem.model.OrderStatusEnum;
+import com.skuu.demo.ordersystem.enums.OrderStatusEnum;
 
 /**
  * @author dcx
@@ -8,45 +8,45 @@ import com.skuu.demo.ordersystem.model.OrderStatusEnum;
  * 提供默认实现，减少重复代码
  * @create 2025-01-27
  */
-public abstract class AbstractOrderStateBehavior implements OrderStateBehavior {
+public abstract class AbstractOrderState implements OrderState {
     
     @Override
-    public void pay(StateContext context) {
+    public void pay(OrderStateContext context) {
         throw new UnsupportedOperationException(
             String.format("当前状态 %s 不支持支付操作", getStatus().getName())
         );
     }
 
     @Override
-    public void ship(StateContext context) {
+    public void ship(OrderStateContext context) {
         throw new UnsupportedOperationException(
             String.format("当前状态 %s 不支持发货操作", getStatus().getName())
         );
     }
 
     @Override
-    public void confirm(StateContext context) {
+    public void confirm(OrderStateContext context) {
         throw new UnsupportedOperationException(
             String.format("当前状态 %s 不支持确认收货操作", getStatus().getName())
         );
     }
 
     @Override
-    public void complete(StateContext context) {
+    public void complete(OrderStateContext context) {
         throw new UnsupportedOperationException(
             String.format("当前状态 %s 不支持完成订单操作", getStatus().getName())
         );
     }
 
     @Override
-    public void cancel(StateContext context) {
+    public void cancel(OrderStateContext context) {
         throw new UnsupportedOperationException(
             String.format("当前状态 %s 不支持取消操作", getStatus().getName())
         );
     }
 
     @Override
-    public void refund(StateContext context) {
+    public void refund(OrderStateContext context) {
         throw new UnsupportedOperationException(
             String.format("当前状态 %s 不支持退款操作", getStatus().getName())
         );

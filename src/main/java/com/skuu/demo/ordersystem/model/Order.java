@@ -1,5 +1,7 @@
 package com.skuu.demo.ordersystem.model;
 
+import com.skuu.demo.ordersystem.enums.OrderStatusEnum;
+
 import java.util.HashMap;
 import java.util.Map;
 

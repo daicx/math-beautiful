@@ -1,7 +1,7 @@
 package com.skuu.demo.ordersystem.state.states;
 
-import com.skuu.demo.ordersystem.model.OrderStatusEnum;
-import com.skuu.demo.ordersystem.state.AbstractOrderStateBehavior;
+import com.skuu.demo.ordersystem.enums.OrderStatusEnum;
+import com.skuu.demo.ordersystem.state.AbstractOrderState;
 import org.springframework.stereotype.Component;
 
 /**
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * @create 2025-01-27
  */
 @Component
-public class RefundedState extends AbstractOrderStateBehavior {
+public class RefundedState extends AbstractOrderState {
     
     @Override
     public boolean canTransitionTo(OrderStatusEnum targetStatus) {

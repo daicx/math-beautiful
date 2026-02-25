@@ -1,9 +1,9 @@
 package com.skuu.demo.ordersystem.state.states;
 
 import com.skuu.demo.ordersystem.model.Order;
-import com.skuu.demo.ordersystem.model.OrderStatusEnum;
-import com.skuu.demo.ordersystem.state.AbstractOrderStateBehavior;
-import com.skuu.demo.ordersystem.state.StateContext;
+import com.skuu.demo.ordersystem.enums.OrderStatusEnum;
+import com.skuu.demo.ordersystem.state.AbstractOrderState;
+import com.skuu.demo.ordersystem.state.OrderStateContext;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @create 2025-01-27
  */
 @Component
-public class CompletedState extends AbstractOrderStateBehavior {
+public class CompletedState extends AbstractOrderState {
     
     @Override
     public boolean canTransitionTo(OrderStatusEnum targetStatus) {
@@ -26,7 +26,7 @@ public class CompletedState extends AbstractOrderStateBehavior {
     }
     
     @Override
-    public void onEnter(StateContext context) {
+    public void onEnter(OrderStateContext context) {
         Order order = context.getOrder();
         System.out.println(String.format("订单 %s 已成功完成，感谢您的购买！", order.getOrderId()));
     }

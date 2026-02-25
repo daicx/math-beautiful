@@ -1,4 +1,4 @@
-package com.skuu.demo.ordersystem.model;
+package com.skuu.demo.ordersystem.enums;
 
 /**
  * @author dcx

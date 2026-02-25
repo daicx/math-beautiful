@@ -1,9 +1,9 @@
 package com.skuu.demo.ordersystem.state.states;
 
 import com.skuu.demo.ordersystem.model.Order;
-import com.skuu.demo.ordersystem.model.OrderStatusEnum;
-import com.skuu.demo.ordersystem.state.AbstractOrderStateBehavior;
-import com.skuu.demo.ordersystem.state.StateContext;
+import com.skuu.demo.ordersystem.enums.OrderStatusEnum;
+import com.skuu.demo.ordersystem.state.AbstractOrderState;
+import com.skuu.demo.ordersystem.state.OrderStateContext;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component;
  * @create 2025-01-27
  */
 @Component
-public class ShippedState extends AbstractOrderStateBehavior {
+public class ShippedState extends AbstractOrderState {
     
     @Override
-    public void confirm(StateContext context) {
+    public void confirm(OrderStateContext context) {
         Order order = context.getOrder();
         System.out.println(String.format("订单 %s 已确认收货", order.getOrderId()));
         order.addMetadata("confirmTime", System.currentTimeMillis());

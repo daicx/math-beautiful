@@ -1,7 +1,7 @@
 package com.skuu.demo.ordersystem.factory;
 
-import com.skuu.demo.ordersystem.model.OrderStatusEnum;
-import com.skuu.demo.ordersystem.state.OrderStateBehavior;
+import com.skuu.demo.ordersystem.enums.OrderStatusEnum;
+import com.skuu.demo.ordersystem.state.OrderState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,11 +20,11 @@ import java.util.Map;
 public class StateFactory {
 
     // 状态对象缓存（状态对象是无状态的，可以复用）
-    private final Map<OrderStatusEnum, OrderStateBehavior> stateCacheMap = new HashMap<>();
+    private final Map<OrderStatusEnum, OrderState> stateCacheMap = new HashMap<>();
 
     // Spring 自动注入所有 OrderStateBehavior 的实现类
     @Autowired(required = false)
-    private List<OrderStateBehavior> orderStateBehaviors;
+    private List<OrderState> orderStates;
 
     /**
      * Spring 初始化后自动执行
@@ -32,9 +32,9 @@ public class StateFactory {
      */
     @PostConstruct
     public void initializeStates() {
-        if (orderStateBehaviors != null && !orderStateBehaviors.isEmpty()) {
+        if (orderStates != null && !orderStates.isEmpty()) {
             // Spring 环境：使用注入的状态类
-            for (OrderStateBehavior stateBehavior : orderStateBehaviors) {
+            for (OrderState stateBehavior : orderStates) {
                 OrderStatusEnum orderStatusEnum = stateBehavior.getStatus();
                 if (orderStatusEnum == null) {
                     return;
@@ -55,8 +55,8 @@ public class StateFactory {
      * @param status 订单状态
      * @return 对应的状态对象
      */
-    public OrderStateBehavior createState(OrderStatusEnum status) {
-        OrderStateBehavior state = stateCacheMap.get(status);
+    public OrderState createState(OrderStatusEnum status) {
+        OrderState state = stateCacheMap.get(status);
         if (state == null) {
             throw new IllegalArgumentException("未知的订单状态: " + status);
         }

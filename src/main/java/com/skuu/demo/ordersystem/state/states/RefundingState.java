@@ -1,9 +1,9 @@
 package com.skuu.demo.ordersystem.state.states;
 
 import com.skuu.demo.ordersystem.model.Order;
-import com.skuu.demo.ordersystem.model.OrderStatusEnum;
-import com.skuu.demo.ordersystem.state.AbstractOrderStateBehavior;
-import com.skuu.demo.ordersystem.state.StateContext;
+import com.skuu.demo.ordersystem.enums.OrderStatusEnum;
+import com.skuu.demo.ordersystem.state.AbstractOrderState;
+import com.skuu.demo.ordersystem.state.OrderStateContext;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component;
  * @create 2025-01-27
  */
 @Component
-public class RefundingState extends AbstractOrderStateBehavior {
+public class RefundingState extends AbstractOrderState {
     
     @Override
-    public void refund(StateContext context) {
+    public void refund(OrderStateContext context) {
         Order order = context.getOrder();
         // 模拟退款处理完成
         System.out.println(String.format("订单 %s 退款处理完成，金额: %.2f 元", 

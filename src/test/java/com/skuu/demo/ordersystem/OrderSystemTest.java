@@ -1,7 +1,7 @@
 package com.skuu.demo.ordersystem;
 
 import com.skuu.demo.ordersystem.service.OrderService;
-import com.skuu.demo.ordersystem.state.StateContext;
+import com.skuu.demo.ordersystem.state.OrderStateContext;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +24,7 @@ public class OrderSystemTest {
         
         // 1. 创建订单
         System.out.println("【步骤1】创建订单");
-        StateContext context = orderService.createOrder(
+        OrderStateContext context = orderService.createOrder(
             "张三", 
             "USER001", 
             "PROD001", 
@@ -68,7 +68,7 @@ public class OrderSystemTest {
     public void testRefundFlow() {
         // 测试：退款流程
         System.out.println("========== 测试退款流程 ==========\n");
-        StateContext refundContext = orderService.createOrder(
+        OrderStateContext refundContext = orderService.createOrder(
             "李四", 
             "USER002", 
             "PROD002", 
@@ -96,7 +96,7 @@ public class OrderSystemTest {
     public void testCancelFlow() {
         // 测试：取消订单
         System.out.println("========== 测试取消流程 ==========\n");
-        StateContext cancelContext = orderService.createOrder(
+        OrderStateContext cancelContext = orderService.createOrder(
             "王五", 
             "USER003", 
             "PROD003", 
