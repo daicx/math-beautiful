@@ -9,10 +9,12 @@
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/interpreter/ExpressionParser.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/chain/Test.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/spi/javaspi2/MysqlClient.java
+/Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/demo/lambdaordersystem/validator/TransitionValidatorChain.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/interpreter/Expression.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/composite/Folder.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/factory/cxgc/Browser.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/combination/factory/OrderFactory.java
+/Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/demo/lambdaordersystem/state/ActionHandler.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/visitor/visitors/PerformanceEvaluator.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/strategy/ShoppingCart.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/protection/AppConfig.java
@@ -34,6 +36,7 @@
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/spi/javaspi2/OracleClient.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/flyweight/CharacterFlyweight.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/math/array/MaxArea.java
+/Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/demo/lambdaordersystem/model/Order.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/combination/event/listeners/NotificationListener.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/bridge/apis/LinuxDrawingAPI.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/protection/DataResponse.java
@@ -45,11 +48,13 @@
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/status/states/PendingPaymentState.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/copy/BeanutilCopy.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/decorator/CoffeeDecorator.java
+/Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/demo/lambdaordersystem/LambdaOrderSystemRunner.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/status/Order.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/combination/state/ShippedState.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/strategy/payment/PayPalPayment.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/mediator/ChatRoomMediator.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/math/tree/page/Tree.java
+/Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/demo/lambdaordersystem/state/StateMachineConfig.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/factory/cxgc/bo/SafariBrowser.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/interpreter/Context.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/combination/proxy/OrderServiceProxy.java
@@ -137,6 +142,7 @@
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/protection/DataService.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/math/tree/page/TreeFilter.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/math/string/LongestPalindrome.java
+/Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/demo/lambdaordersystem/state/LambdaOrderContext.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/command/Command.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/templatemethod/worker/OtherWorker.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/comm/FileCopy.java
@@ -144,9 +150,11 @@
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/factory/jdgc/SimpleFactory.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/functioninterface/Test.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/math/tree/PreListTree.java
+/Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/demo/lambdaordersystem/enums/OrderStatusEnum.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/factory/gcff/factory/BicycleFactory.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/combination/event/listeners/InventoryListener.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/prototype/Test.java
+/Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/demo/lambdaordersystem/service/LambdaOrderService.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/facade/subsystems/Screen.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/combination/state/OrderContext.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/status/states/CancelledState.java
@@ -181,6 +189,7 @@
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/demo/ordersystem/factory/StateFactory.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/math/array/TwoSum.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/demo/ordersystem/state/states/RefundingState.java
+/Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/demo/lambdaordersystem/event/OrderStatusChangedEvent.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/bean/BeanAware1.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/math/thread/TwoThread.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/protection/DataController.java
@@ -200,6 +209,7 @@
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/combination/state/OrderState.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/factory/cxgc/bo/ChromeBrowser.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/templatemethod/Test.java
+/Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/demo/lambdaordersystem/validator/TransitionRequest.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/design/combination/service/OrderService.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/demo/ordersystem/state/states/DeliveredState.java
 /Users/dcx/work/javapro/math-beautiful/src/main/java/com/skuu/demo/ordersystem/state/states/PendingPaymentState.java

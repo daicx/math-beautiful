@@ -1,4 +1,4 @@
-package com.skuu.functioninterface;
+package com.skuu.jdk8.functioninterface.customer;
 
 /**
  * @author dcx
