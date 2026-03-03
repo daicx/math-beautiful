@@ -17,13 +17,15 @@ public class OrderDemo {
         reqs.add(new Req().setName("dd1"));
         reqs.add(new Req().setName("dd2"));
         reqs.add(new Req().setName("dd3"));
-        OrderTemplate orderTemplate = new OrderTemplate()
-                .setReqs(reqs)
-                .setOrderOpt(new OrderOpt())
-                .setPredicate(PredicateDemo::check)
-                .setFunction(FunctionDemo::singleTrans)
-                .setConsumer(ConsumerDemo::consumer);
-        List<Res> template = orderTemplate.template();
+        PredicateDemo predicateDemo = new PredicateDemo();
+        OrderContext orderContext = OrderContext.builder()
+                .reqs(reqs)
+                .orderOpt(new OrderOpt())
+                .predicate(predicateDemo::check1)
+                .function(FunctionDemo::singleTrans)
+                .consumer(ConsumerDemo::consumer)
+                .build();
+        List<Res> template = orderContext.template();
         System.out.println(template);
     }
 }

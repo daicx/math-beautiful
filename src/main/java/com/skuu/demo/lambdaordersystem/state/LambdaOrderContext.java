@@ -1,18 +1,20 @@
 package com.skuu.demo.lambdaordersystem.state;
 
+import com.skuu.demo.lambdaordersystem.enums.OrderActionEnum;
+import com.skuu.demo.lambdaordersystem.enums.OrderStatusEnum;
 import com.skuu.demo.lambdaordersystem.event.OrderStatusChangedEvent;
 import com.skuu.demo.lambdaordersystem.model.Order;
-import com.skuu.demo.lambdaordersystem.enums.OrderStatusEnum;
 import com.skuu.demo.lambdaordersystem.validator.TransitionRequest;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
- * 订单状态上下文（lambda 版）：通过配置表 + Consumer 驱动，无子类状态
+ * 订单状态上下文（lambda 版）。高并发时由上层在调用 pay/ship/transitionTo 等前对订单加锁。
  */
 public class LambdaOrderContext {
     private final Order order;
@@ -29,15 +31,12 @@ public class LambdaOrderContext {
     }
 
     public void addStatusChangeListener(Consumer<OrderStatusChangedEvent> listener) {
-        if (listener != null) statusChangeListeners.add(listener);
+        Optional.ofNullable(listener).ifPresent(statusChangeListeners::add);
     }
 
     public Order getOrder() { return order; }
     public OrderStatusEnum getCurrentStatus() { return currentStatus; }
 
-    /**
-     * 执行状态转换（校验 -> 侧效 -> 更新 -> 通知）
-     */
     public void transitionTo(OrderStatusEnum newStatus) {
         TransitionRequest req = new TransitionRequest(currentStatus, newStatus, order);
         if (!validator.test(req)) {
@@ -48,23 +47,18 @@ public class LambdaOrderContext {
         OrderStatusEnum previous = currentStatus;
         order.updateStatus(newStatus);
         this.currentStatus = newStatus;
-        java.util.function.Consumer<LambdaOrderContext> onEnter = config.getOnEnter(newStatus);
-        if (onEnter != null) onEnter.accept(this);
+        Optional.ofNullable(config.getOnEnter(newStatus)).ifPresent(onEnter -> onEnter.accept(this));
         OrderStatusChangedEvent event = new OrderStatusChangedEvent(order, previous, newStatus);
-        statusChangeListeners.forEach(l -> l.accept(event));
+        statusChangeListeners.forEach(listener -> listener.accept(event));
     }
 
-    /**
-     * 根据动作名执行：查表得到 ActionHandler，校验后执行 beforeTransition 再 transitionTo
-     */
-    public void runAction(String actionName) {
-        Map<String, ActionHandler> actions = config.getHandlers(currentStatus);
-        ActionHandler handler = actions != null ? actions.get(actionName) : null;
-        if (handler == null) {
-            throw new IllegalStateException(
-                String.format("当前状态 %s 不支持操作: %s", currentStatus.getName(), actionName));
-        }
-        if (!validator.test(new TransitionRequest(currentStatus, handler.getNextStatus(), order))) {
+    public void runAction(OrderActionEnum action) {
+        ActionHandler handler = Optional.ofNullable(config.getHandlers(currentStatus))
+            .map(m -> m.get(action))
+            .orElseThrow(() -> new IllegalStateException(
+                String.format("当前状态 %s 不支持操作: %s", currentStatus.getName(), action.getName())));
+        TransitionRequest req = new TransitionRequest(currentStatus, handler.getNextStatus(), order);
+        if (!validator.test(req)) {
             throw new IllegalStateException(
                 String.format("订单 %s 不能从 %s 转换到 %s",
                     order.getOrderId(), currentStatus.getName(), handler.getNextStatus().getName()));
@@ -73,10 +67,10 @@ public class LambdaOrderContext {
         transitionTo(handler.getNextStatus());
     }
 
-    public void pay()   { runAction("pay"); }
-    public void cancel() { runAction("cancel"); }
-    public void ship()   { runAction("ship"); }
-    public void refund() { runAction("refund"); }
-    public void confirm() { runAction("confirm"); }
-    public void complete() { runAction("complete"); }
+    public void pay()    { runAction(OrderActionEnum.PAY); }
+    public void cancel() { runAction(OrderActionEnum.CANCEL); }
+    public void ship()   { runAction(OrderActionEnum.SHIP); }
+    public void refund() { runAction(OrderActionEnum.REFUND); }
+    public void confirm() { runAction(OrderActionEnum.CONFIRM); }
+    public void complete() { runAction(OrderActionEnum.COMPLETE); }
 }

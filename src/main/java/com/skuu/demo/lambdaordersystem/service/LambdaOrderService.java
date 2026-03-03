@@ -9,12 +9,15 @@ import com.skuu.demo.lambdaordersystem.validator.TransitionRequest;
 import com.skuu.demo.lambdaordersystem.validator.TransitionValidatorChain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
- * 订单服务（lambda 版）：创建/加载订单，校验链用 Predicate 组合
+ * 订单服务（lambda 重构版）：校验链用 Predicate 组合，监听器用 Stream + 方法引用注册
  */
 public class LambdaOrderService {
 
@@ -22,13 +25,20 @@ public class LambdaOrderService {
     private final Predicate<TransitionRequest> validator;
     private final List<Order> orderRepository = new ArrayList<>();
 
+    /** 默认状态变更监听器（方法引用），便于用 Stream 注册 */
+    private static final List<Consumer<OrderStatusChangedEvent>> DEFAULT_LISTENERS = Arrays.asList(
+        LambdaOrderService::logStatusChange,
+        LambdaOrderService::notifyUser,
+        LambdaOrderService::inventoryEffect
+    );
+
     public LambdaOrderService() {
         this.config = StateMachineConfig.createDefault();
-        this.validator = TransitionValidatorChain.chain(
+        this.validator = Stream.of(
             config.stateSupportPredicate(),
             TransitionValidatorChain.terminalState(),
             TransitionValidatorChain.paymentAmount()
-        );
+        ).reduce(Predicate::and).orElse(t -> true);
     }
 
     public LambdaOrderContext createOrder(String customerName, String userId,
@@ -39,10 +49,7 @@ public class LambdaOrderService {
         orderRepository.add(order);
 
         LambdaOrderContext ctx = new LambdaOrderContext(order, config, validator);
-        // 可选：用 lambda 注册监听
-        ctx.addStatusChangeListener(LambdaOrderService::logStatusChange);
-        ctx.addStatusChangeListener(LambdaOrderService::notifyUser);
-        ctx.addStatusChangeListener(LambdaOrderService::inventoryEffect);
+        DEFAULT_LISTENERS.forEach(ctx::addStatusChangeListener);
 
         System.out.println(String.format("订单创建成功: %s, 金额: %.2f 元", orderId, amount));
         return ctx;
@@ -60,7 +67,6 @@ public class LambdaOrderService {
         return new ArrayList<>(orderRepository);
     }
 
-    // ---------- 用 lambda 表达的“观察者” ----------
     private static void logStatusChange(OrderStatusChangedEvent e) {
         System.out.println(String.format("[日志] 订单 %s 状态: %s -> %s (时间: %d)",
             e.getOrder().getOrderId(), e.getPreviousStatus().getName(), e.getNewStatus().getName(),

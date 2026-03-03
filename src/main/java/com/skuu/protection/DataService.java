@@ -2,6 +2,7 @@ package com.skuu.protection;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
+import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -18,15 +19,16 @@ public class DataService {
 
     private final RestTemplate restTemplate;
 
-    public DataService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
-
     /**
      * 主方法：先尝试调用外部接口，失败则降级到本地,需要：spring-boot-starter-aop
+     * Retry（最外层） → CircuitBreaker → TimeLimiter（最内层）
+     * 先尝试重试几次（处理瞬时故障）
+     * 如果重试都失败了，再统计进熔断器
+     * 整个过程受超时保护
      */
-    @CircuitBreaker(name = "externalDataService", fallbackMethod = "fallbackToLocal")
     @Retry(name = "externalDataService", fallbackMethod = "fallbackToLocal")
+    @CircuitBreaker(name = "externalDataService", fallbackMethod = "fallbackToLocal")
+    @TimeLimiter(name = "externalDataService",fallbackMethod = "fallbackToLocal")
     public DataResponse getDataFromExternal(String param) {
         log.info("Calling external API with param: {}", param);
         try {
@@ -39,6 +41,10 @@ public class DataService {
             log.error("External API call failed", e);
             throw e; // 抛出异常触发 Retry/CB
         }
+    }
+
+    public DataService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
     /**

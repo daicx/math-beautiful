@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 /**
  * @author dcx
@@ -51,5 +52,10 @@ public class OrderOpt {
             System.out.println("通知成功");
         });
         System.out.println("通知成功---------------");
+    }
+    //获取订单
+    public String getOrder(Req req, Supplier<List<Res>> supplier) {
+        List<Res> res = supplier.get();
+        return res.toString();
     }
 }

@@ -21,7 +21,7 @@ import java.util.function.Predicate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderTemplate {
+public class OrderContext {
     private List<Req> reqs;
     private Predicate<Req> predicate;
     private Consumer<Req> consumer;
@@ -36,6 +36,9 @@ public class OrderTemplate {
      * @date 2026/2/25 15:02
      */
     public List<Res> template() {
+        boolean test = predicate.test(reqs.get(0));
+        Res apply = function.apply(reqs.get(0));
+        consumer.accept(reqs.get(0));
         List<Res> resList = new ArrayList<>();
         orderOpt.check(reqs, predicate);
         orderOpt.add(reqs, function);

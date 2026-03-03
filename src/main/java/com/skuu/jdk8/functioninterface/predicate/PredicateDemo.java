@@ -34,4 +34,15 @@ public class PredicateDemo {
             return false;
         }
     }
+    public Boolean check1(Req a) {
+        String name = a.getName();
+        Res res = new Res().setName(name);
+        if ("dd2".equals(name)) {
+            res.setDesc("经过transed 重名");
+            return true;
+        } else {
+            res.setDesc("经过transed 不重名");
+            return false;
+        }
+    }
 }
